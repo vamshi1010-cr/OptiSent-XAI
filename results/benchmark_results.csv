@@ -1,0 +1,7 @@
+Model,Accuracy (%),Precision (%),Recall (%),Weighted F1 (%),Macro F1 (%),ROC-AUC,Log-Loss,Latency (ms)
+Multinomial Naive Bayes (Word TF-IDF),70.94,72.91,70.94,69.44,65.73,0.8923,1.2543,0.002
+Logistic Regression (Word TF-IDF),69.79,60.33,69.79,64.41,54.93,0.8944,1.0685,0.18
+Calibrated LinearSVC (Word+Char Subword),77.4,78.45,77.4,76.56,75.02,0.9174,0.8706,0.507
+Random Forest (Hybrid SVD + Telemetry),88.02,88.13,88.02,87.87,87.05,0.9428,0.4994,0.987
+Default GBDT (Hybrid SVD + Telemetry),89.69,89.75,89.69,89.58,88.91,0.9473,0.4978,0.178
+Proposed OptiSent-XAI (TPE-GBDT + Subword Stacking),91.46,91.5,91.46,91.4,90.89,0.9491,0.4194,3.674

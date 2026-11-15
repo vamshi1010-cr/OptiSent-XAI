@@ -1,0 +1,5 @@
+Class,Precision (%),Recall (%),F1-Score (%),Support
+Positive Endorsement (C0),90.21,95.11,92.59,368
+Neutral / Mixed-Aspect (C1),92.37,87.2,89.71,250
+Negative Quality Defect (C2),92.2,95.26,93.71,211
+Critical Safety / Fraud (C3),92.37,83.21,87.55,131

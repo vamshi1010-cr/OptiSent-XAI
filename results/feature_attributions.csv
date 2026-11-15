@@ -1,0 +1,13 @@
+Feature,Mean_SHAP_Importance,Std_Importance
+Defect Keyword Density,14.454,0.706
+Star Rating (1-5),8.954,0.265
+Praise Keyword Density,5.092,0.534
+Safety Hazard KW Count,4.874,0.375
+Contrastive Discourse Markers,1.687,0.601
+Helpfulness Vote Ratio,0.943,0.252
+Review Velocity Burst,0.912,0.22
+Shannon Character Entropy,0.564,0.198
+Verified Purchase Flag,0.479,0.147
+SVD Semantic Component 1,0.404,0.01
+RSDI Discrepancy Score,0.4,0.0
+SVD Semantic Component 2,0.4,0.0

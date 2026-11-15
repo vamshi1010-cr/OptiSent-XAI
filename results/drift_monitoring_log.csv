@@ -1,0 +1,9 @@
+Production_Batch,PSI_Score,EWMA_Statistic,KS_Statistic,Macro_F1_Pct,System_Status
+Week 1,0.042,0.0459,0.038,90.74,Stationary Baseline
+Week 2,0.058,0.0501,0.049,90.49,Stationary Normal
+Week 3,0.076,0.0592,0.062,90.14,Stationary Normal
+Week 4,0.094,0.0714,0.078,89.79,Minor Lexical Shift
+Week 5,0.186,0.1115,0.142,86.54,Moderate Drift Warning
+Week 6,0.294,0.1754,0.218,82.09,Critical Drift Alert (Retrain)
+Week 7,0.064,0.1364,0.054,90.59,Post-Retrain Recovery
+Week 8,0.051,0.1065,0.044,90.94,Stabilized Production
