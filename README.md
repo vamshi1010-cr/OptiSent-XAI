@@ -1,5 +1,12 @@
 # OptiSent-XAI: Explainable Multi-Class E-Commerce Product Review Triage, Aspect-Aware Sentiment Calibration, and Concept Drift Monitoring
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2ea44f?style=for-the-badge&logo=github)](https://vamshi1010-cr.github.io/OptiSent-XAI/)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue?style=for-the-badge&logo=python)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
+
+> 🌐 **Live Interactive Observatory**: [https://vamshi1010-cr.github.io/OptiSent-XAI/](https://vamshi1010-cr.github.io/OptiSent-XAI/)
+
 **Course**: `22ITI02 – Industrial / Rural Internship – II` (B.E. IT V Semester, 2026–27)  
 **Institute**: Chaitanya Bharathi Institute of Technology (Autonomous), Hyderabad  
 **Student**: K Vamshi Chandra Reddy (`160124737111`, Section `IT-2`)  
