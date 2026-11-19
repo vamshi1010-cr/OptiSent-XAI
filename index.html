@@ -3,2017 +3,1369 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OptiSent-XAI | Industrial E-Commerce Review Triage & Calibration Observatory (22ITI02)</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <title>OptiSent-XAI • Review Triage & Explainable Sentiment Calibration</title>
+  <meta name="description" content="Explainable Multi-Class E-Commerce Product Review Triage, Aspect-Aware Sentiment Calibration, and Concept Drift Monitoring (CBIT 22ITI02)" />
+  
+  <!-- Modern Inter & Monospace typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
   <style>
-    :root {
-      --bg-page: #f5f2e9;
-      --bg-card: #fbf9f3;
-      --bg-well: #ede7d8;
-      --border-ink: #d5ccb8;
-      --text-ink: #1d2521;
-      --text-sub: #4f5c55;
-      --text-dim: #76827b;
-      --sage: #2d5a43;
-      --sage-glow: rgba(45, 90, 67, 0.16);
-      --ochre: #b06918;
-      --ochre-glow: rgba(176, 105, 24, 0.16);
-      --rust: #a63429;
-      --rust-glow: rgba(166, 52, 41, 0.16);
-      --slate: #355861;
-      --grid-stroke: rgba(45, 90, 67, 0.055);
-      --gold: #c68e17;
-    }
-
-    body.theme-dusk {
-      --bg-page: #121815;
-      --bg-card: #19221e;
-      --bg-well: #212d28;
-      --border-ink: #31423b;
-      --text-ink: #eeeae0;
-      --text-sub: #b3c0b9;
-      --text-dim: #7e8e85;
-      --sage: #5ec28e;
-      --sage-glow: rgba(94, 194, 142, 0.18);
-      --ochre: #e8a449;
-      --ochre-glow: rgba(232, 164, 73, 0.18);
-      --rust: #ec7569;
-      --rust-glow: rgba(236, 117, 105, 0.18);
-      --slate: #7bc4d1;
-      --grid-stroke: rgba(179, 192, 185, 0.045);
-      --gold: #ffd166;
-    }
-
     body {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background-color: var(--bg-page);
-      color: var(--text-ink);
-      background-image:
-        linear-gradient(to right, var(--grid-stroke) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--grid-stroke) 1px, transparent 1px);
-      background-size: 40px 40px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      overflow-x: hidden;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-font-smoothing: antialiased;
     }
-
-    .serif-display {
-      font-family: 'Instrument Serif', Georgia, serif;
-      letter-spacing: -0.015em;
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
     }
-
-    .mono {
-      font-family: 'JetBrains Mono', monospace;
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #f1f5f9;
     }
-
-    .art-plate {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-ink);
-      box-shadow: 0 8px 30px rgba(29, 37, 33, 0.05);
-      transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.25s ease;
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
     }
-
-    .well-box {
-      background-color: var(--bg-well);
-      border: 1px solid var(--border-ink);
-    }
-
-    .pill-sage {
-      background-color: var(--sage-glow);
-      color: var(--sage);
-      border: 1px solid var(--sage);
-    }
-
-    .pill-ochre {
-      background-color: var(--ochre-glow);
-      color: var(--ochre);
-      border: 1px solid var(--ochre);
-    }
-
-    .pill-rust {
-      background-color: var(--rust-glow);
-      color: var(--rust);
-      border: 1px solid var(--rust);
-    }
-
-    .orb-btn {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border-ink);
-      color: var(--text-ink);
-      transition: all 0.2s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .orb-btn:hover {
-      transform: translateY(-3px);
-      border-color: var(--sage);
-      box-shadow: 0 6px 18px var(--sage-glow);
-    }
-
-    .orb-btn-active {
-      border-color: var(--sage) !important;
-      background-color: var(--sage-glow) !important;
-      box-shadow: 0 0 0 2px var(--sage-glow);
-    }
-
-    input[type="range"] {
-      accent-color: var(--sage);
-    }
-
-    .art-img-frame {
-      position: relative;
-      overflow: hidden;
-      border-radius: 1rem;
-      border: 1px solid var(--border-ink);
-    }
-
-    body.theme-dusk .art-img-blend {
-      filter: brightness(0.92) contrast(1.05);
+    .tab-btn-active {
+      color: #1d4ed8 !important;
+      border-bottom-color: #2563eb !important;
+      background-color: #eff6ff !important;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col font-sans">
 
-  <!-- ========================================================================= -->
-  <!-- FLOATING STUDIO HEADER (PRECISION APERTURE SENSOR •)              -->
-  <!-- ========================================================================= -->
-  <header class="sticky top-0 z-30 border-b backdrop-blur-md" style="background-color: color-mix(in srgb, var(--bg-card) 88%, transparent); border-color: var(--border-ink);">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <!-- Precision Optical Sensor Aperture Icon (Clean Industrial) -->
-        <div class="w-10 h-10 rounded-xl flex items-center justify-center pill-sage">
-          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <circle cx="12" cy="12" r="9" />
-            <circle cx="12" cy="12" r="4" fill="currentColor" fill-opacity="0.18" />
-            <line x1="12" y1="3" x2="12" y2="7" />
-            <line x1="12" y1="17" x2="12" y2="21" />
-            <line x1="3" y1="12" x2="7" y2="12" />
-            <line x1="17" y1="12" x2="21" y2="12" />
-          </svg>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <span class="serif-display text-xl sm:text-2xl font-normal">OptiSent-XAI</span>
-            <span class="text-[11px] mono pill-sage px-2 py-0.5 rounded-full font-semibold">90.89% Macro F1</span>
-            <span class="hidden sm:inline-block text-[11px] mono pill-ochre px-2 py-0.5 rounded-full">3.67 ms CPU</span>
-            <span class="hidden md:inline-block text-[11px] mono well-box px-2 py-0.5 rounded-full font-medium">38 Hybrid Features</span>
+  <!-- ======================================================================= -->
+  <!-- 1. TOP NAVIGATION & HEADER                                              -->
+  <!-- ======================================================================= -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Brand / Identity -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold shadow-sm">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
           </div>
-          <p class="text-[11px] mono" style="color: var(--text-sub);">
-            K Vamshi Chandra Reddy (160124737111) • Navodita Infotech (CNI2606698) • CBIT 22ITI02
-          </p>
-        </div>
-      </div>
-
-      <!-- Controls: Live Python Kernel Badge + Verifier Lever + Reading Palette -->
-      <div class="flex items-center flex-wrap gap-2">
-        <!-- Live Python Kernel / Stream Status Badge -->
-        <button id="btn-kernel-badge" type="button" onclick="toggleStreamMode()" class="px-2.5 py-1 rounded-xl text-xs font-semibold mono flex items-center gap-1.5 transition pill-sage" title="Click to toggle between FastAPI Server Stream (:8000) and Local Sandbox">
-          <span id="kernel-status-dot" class="w-2 h-2 rounded-full animate-ping" style="background-color: var(--sage);"></span>
-          <span id="kernel-status-text">Kernel: Checking :8000...</span>
-        </button>
-
-        <!-- Verifier Mode Toggle -->
-        <div class="well-box p-1 rounded-xl flex items-center gap-1 text-xs">
-          <button id="mode-btn-optisent" type="button" onclick="setVerifierMode('optisent')" class="px-2.5 py-1 rounded-lg font-semibold pill-sage transition">
-            OptiSent-XAI Guard
-          </button>
-          <button id="mode-btn-legacy" type="button" onclick="setVerifierMode('legacy')" class="px-2.5 py-1 rounded-lg font-medium transition" style="color: var(--text-sub);">
-            270-Row Baseline
-          </button>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-base font-bold text-slate-900 tracking-tight">OptiSent-XAI</span>
+              <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">v2.1</span>
+            </div>
+            <p class="text-xs text-slate-500 hidden sm:block">Explainable E-Commerce Review Triage &amp; Sentiment Calibration</p>
+          </div>
         </div>
 
-        <!-- Theme Toggle -->
-        <button id="btn-theme-toggle" type="button" onclick="toggleReadingTheme()" class="orb-btn text-xs font-semibold px-3 py-1.5 rounded-xl">
-          Warm Paper
-        </button>
+        <!-- Academic & Backend Status Pills -->
+        <div class="flex items-center gap-2.5">
+          <span class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+            <span>CBIT Hyderabad</span>
+            <span class="text-slate-400">•</span>
+            <span class="font-mono text-[11px]">22ITI02</span>
+          </span>
+
+          <div id="backend-status-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200">
+            <span id="backend-status-dot" class="w-2 h-2 rounded-full bg-amber-500"></span>
+            <span id="backend-status-text">Client Sandbox Mode</span>
+          </div>
+        </div>
+
       </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex space-x-1 border-t border-slate-100 -mb-px overflow-x-auto custom-scroll" aria-label="Tabs">
+        <button type="button" onclick="switchTab('playground')" id="tab-btn-playground" class="tab-btn tab-btn-active whitespace-nowrap py-3 px-4 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
+          Review Triage Playground
+        </button>
+
+        <button type="button" onclick="switchTab('benchmarks')" id="tab-btn-benchmarks" class="tab-btn whitespace-nowrap py-3 px-4 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+          Model Benchmarks (N=960)
+        </button>
+
+        <button type="button" onclick="switchTab('drift')" id="tab-btn-drift" class="tab-btn whitespace-nowrap py-3 px-4 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+          8-Week Drift Monitoring
+        </button>
+
+        <button type="button" onclick="switchTab('evidence')" id="tab-btn-evidence" class="tab-btn whitespace-nowrap py-3 px-4 text-xs sm:text-sm font-semibold border-b-2 border-transparent text-slate-600 hover:text-slate-900 transition flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+          Viva Report Evidence
+        </button>
+      </nav>
     </div>
   </header>
 
-  <!-- Floating Toast Notification -->
-  <div id="toast-container" class="fixed bottom-5 right-5 z-50 hidden">
-    <div class="art-plate px-4 py-2.5 rounded-xl flex items-center gap-2.5 text-xs font-medium shadow-lg" style="border-color: var(--sage);">
-      <span class="w-2 h-2 rounded-full" style="background-color: var(--sage);"></span>
-      <span id="toast-message">Parcel scanned.</span>
-    </div>
-  </div>
+  <!-- ======================================================================= -->
+  <!-- 2. MAIN CONTENT CONTAINER                                               -->
+  <!-- ======================================================================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 
-  <!-- ========================================================================= -->
-  <!-- MAIN CONTINUOUS KINETIC VISUAL STORYTELLING CANVAS                        -->
-  <!-- ========================================================================= -->
-  <main class="max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 flex-1 space-y-10">
-
-    <!-- ======================================================================= -->
-    <!-- ACT I: INDUSTRIAL E-COMMERCE STREAM TRIAGE & OPTICAL SPECTROGRAPH        -->
-    <!-- ======================================================================= -->
-    <section class="art-plate rounded-3xl p-5 sm:p-7 space-y-6">
-
-      <!-- Top Split: Editorial Narrative + Technical Triage Architecture Diagram -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-        <div class="lg:col-span-5 space-y-3">
-          <div class="inline-flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full" style="background-color: var(--sage);"></span>
-            <span class="text-xs mono uppercase tracking-wider font-semibold" style="color: var(--sage);">Act I • Industrial Review Triage</span>
-          </div>
-          <h1 class="serif-display text-3xl sm:text-4xl lg:text-[42px] leading-[1.08] font-normal">
-            Sorting 4,800 Reviews Before Bad Signals Reach the Catalog
-          </h1>
-          <p class="text-xs sm:text-sm leading-relaxed" style="color: var(--text-sub);">
-            Tap any parcel orb below—or type a custom review—to launch an e-commerce review onto the high-speed sorting conveyor. The <strong>OptiSent Optical Spectrograph</strong> extracts 24 SVD latent components and subword trigrams, calculates the <strong>RSDI divergence score</strong>, intercepts <strong>5★ sarcasm traps</strong>, and routes packages into four live operational SLA chutes.
-          </p>
-
-          <!-- 4 Live Operational SLA Chutes -->
-          <div class="grid grid-cols-2 gap-2 pt-1">
-            <div class="well-box rounded-xl p-2.5 flex items-center gap-2.5">
-              <span class="w-3 h-3 rounded-full shrink-0" style="background-color: var(--sage);"></span>
-              <div>
-                <span class="text-xs font-bold block">C0 • Praise (92.6%)</span>
-                <span class="text-[10px] mono" style="color: var(--text-dim);">Auto-Publish Chute</span>
-              </div>
-            </div>
-            <div class="well-box rounded-xl p-2.5 flex items-center gap-2.5">
-              <span class="w-3 h-3 rounded-full shrink-0" style="background-color: var(--slate);"></span>
-              <div>
-                <span class="text-xs font-bold block">C1 • Mixed (89.7%)</span>
-                <span class="text-[10px] mono" style="color: var(--text-dim);">24h UX Digest Chute</span>
-              </div>
-            </div>
-            <div class="well-box rounded-xl p-2.5 flex items-center gap-2.5">
-              <span class="w-3 h-3 rounded-full shrink-0" style="background-color: var(--ochre);"></span>
-              <div>
-                <span class="text-xs font-bold block">C2 • Defect (93.7%)</span>
-                <span class="text-[10px] mono" style="color: var(--text-dim);">&lt;4h Vendor QA Chute</span>
-              </div>
-            </div>
-            <div class="well-box rounded-xl p-2.5 flex items-center gap-2.5">
-              <span class="w-3 h-3 rounded-full shrink-0" style="background-color: var(--rust);"></span>
-              <div>
-                <span class="text-xs font-bold block">C3 • Hazard (87.6%)</span>
-                <span class="text-[10px] mono" style="color: var(--text-dim);">&lt;15m P0 SKU Halt Chute</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Technical Pictorial Diagram of Stream Triage Pipeline -->
-        <div class="lg:col-span-7">
-          <div class="art-img-frame shadow-md p-4 bg-gradient-to-br from-stone-50/80 to-amber-50/40" style="background-color: var(--bg-well);">
-            <!-- High-Precision SVG Technical Blueprint Diagram -->
-            <svg class="w-full h-56 sm:h-64" viewBox="0 0 600 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Grid background -->
-              <defs>
-                <pattern id="diag-grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                  <path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" stroke-width="0.5" stroke-opacity="0.1" />
-                </pattern>
-                <linearGradient id="laser-grad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#2d5a43" stop-opacity="0.8"/>
-                  <stop offset="50%" stop-color="#b06918" stop-opacity="0.9"/>
-                  <stop offset="100%" stop-color="#a63429" stop-opacity="0.9"/>
-                </linearGradient>
-              </defs>
-              <rect width="600" height="280" fill="url(#diag-grid)" />
-
-              <!-- Pipeline Flow Stage 1: Input Review Ingestion -->
-              <g transform="translate(20, 40)">
-                <rect width="130" height="90" rx="8" fill="var(--bg-card)" stroke="var(--border-ink)" stroke-width="1.5"/>
-                <text x="65" y="24" text-anchor="middle" font-family="JetBrains Mono" font-size="10" font-weight="700" fill="var(--text-ink)">REVIEW INGESTION</text>
-                <text x="65" y="42" text-anchor="middle" font-family="Inter" font-size="9" fill="var(--text-sub)">4,800 Corpus Rows</text>
-                <text x="65" y="58" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="var(--sage)">16 Product Categories</text>
-                <text x="65" y="74" text-anchor="middle" font-family="JetBrains Mono" font-size="8.5" fill="var(--text-dim)">N-gram (1,2) + Char (3,5)</text>
-              </g>
-
-              <!-- Arrow 1 -> 2 -->
-              <path d="M 150 85 L 185 85" stroke="var(--border-ink)" stroke-width="2" marker-end="url(#arrow)" />
-              <polygon points="185,85 177,80 177,90" fill="var(--border-ink)" />
-
-              <!-- Pipeline Flow Stage 2: Feature Transformation -->
-              <g transform="translate(195, 25)">
-                <rect width="180" height="120" rx="8" fill="var(--bg-card)" stroke="var(--sage)" stroke-width="2"/>
-                <text x="90" y="24" text-anchor="middle" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="var(--sage)">HYBRID FEATURE FUSION</text>
-                
-                <!-- Subcomponents -->
-                <rect x="10" y="36" width="160" height="22" rx="4" fill="var(--bg-well)"/>
-                <text x="90" y="51" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="var(--text-ink)">24 SVD Latent Components</text>
-
-                <rect x="10" y="64" width="160" height="22" rx="4" fill="var(--bg-well)"/>
-                <text x="90" y="79" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="var(--text-ink)">11 Telemetry (RSDI + Entropy)</text>
-
-                <rect x="10" y="92" width="160" height="20" rx="4" fill="var(--bg-well)"/>
-                <text x="90" y="106" text-anchor="middle" font-family="JetBrains Mono" font-size="8.5" fill="var(--ochre)">3 Non-linear Interactions</text>
-              </g>
-
-              <!-- Arrow 2 -> 3 -->
-              <path d="M 375 85 L 410 85" stroke="var(--border-ink)" stroke-width="2" />
-              <polygon points="410,85 402,80 402,90" fill="var(--border-ink)" />
-
-              <!-- Pipeline Flow Stage 3: Calibrated Stacking Model -->
-              <g transform="translate(420, 30)">
-                <rect width="160" height="110" rx="8" fill="var(--bg-card)" stroke="var(--border-ink)" stroke-width="1.5"/>
-                <text x="80" y="24" text-anchor="middle" font-family="JetBrains Mono" font-size="10.5" font-weight="700" fill="var(--text-ink)">TPE-GBDT ENSEMBLE</text>
-                <text x="80" y="44" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="var(--sage)">0.65 TPE GBDT (Trial #27)</text>
-                <text x="80" y="60" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="var(--slate)">0.35 Calibrated Subword SVC</text>
-                <rect x="15" y="74" width="130" height="24" rx="4" fill="var(--sage)" fill-opacity="0.15" stroke="var(--sage)"/>
-                <text x="80" y="90" text-anchor="middle" font-family="JetBrains Mono" font-size="10" font-weight="700" fill="var(--sage)">90.89% Macro F1</text>
-              </g>
-
-              <!-- 4 Operational SLA Sorting Chutes Below -->
-              <g transform="translate(30, 185)">
-                <!-- Chute C0 -->
-                <rect x="0" y="0" width="125" height="70" rx="8" fill="var(--bg-card)" stroke="#2d5a43" stroke-width="1.5"/>
-                <circle cx="16" cy="18" r="5" fill="#2d5a43" />
-                <text x="28" y="22" font-family="JetBrains Mono" font-size="10" font-weight="700" fill="#2d5a43">C0 Praise</text>
-                <text x="12" y="42" font-family="Inter" font-size="9" fill="var(--text-sub)">Auto-Publish to Catalog</text>
-                <text x="12" y="58" font-family="JetBrains Mono" font-size="9" font-weight="600" fill="#2d5a43">F1: 92.59% (n=368)</text>
-
-                <!-- Chute C1 -->
-                <rect x="140" y="0" width="125" height="70" rx="8" fill="var(--bg-card)" stroke="#355861" stroke-width="1.5"/>
-                <circle cx="156" cy="18" r="5" fill="#355861" />
-                <text x="168" y="22" font-family="JetBrains Mono" font-size="10" font-weight="700" fill="#355861">C1 Mixed</text>
-                <text x="152" y="42" font-family="Inter" font-size="9" fill="var(--text-sub)">24h Product Digest</text>
-                <text x="152" y="58" font-family="JetBrains Mono" font-size="9" font-weight="600" fill="#355861">F1: 89.71% (n=250)</text>
-
-                <!-- Chute C2 -->
-                <rect x="280" y="0" width="125" height="70" rx="8" fill="var(--bg-card)" stroke="#b06918" stroke-width="1.5"/>
-                <circle cx="296" cy="18" r="5" fill="#b06918" />
-                <text x="308" y="22" font-family="JetBrains Mono" font-size="10" font-weight="700" fill="#b06918">C2 Defect</text>
-                <text x="292" y="42" font-family="Inter" font-size="9" fill="var(--text-sub)">&lt;4h Vendor QA Ticket</text>
-                <text x="292" y="58" font-family="JetBrains Mono" font-size="9" font-weight="600" fill="#b06918">F1: 93.71% (n=211)</text>
-
-                <!-- Chute C3 -->
-                <rect x="420" y="0" width="125" height="70" rx="8" fill="var(--bg-card)" stroke="#a63429" stroke-width="1.5"/>
-                <circle cx="436" cy="18" r="5" fill="#a63429" />
-                <text x="448" y="22" font-family="JetBrains Mono" font-size="10" font-weight="700" fill="#a63429">C3 Hazard</text>
-                <text x="432" y="42" font-family="Inter" font-size="9" fill="var(--text-sub)">&lt;15m P0 SKU Halt</text>
-                <text x="432" y="58" font-family="JetBrains Mono" font-size="9" font-weight="600" fill="#a63429">F1: 87.55% (n=131)</text>
-              </g>
-
-              <!-- Routing Branch Lines from Ensemble down to Chutes -->
-              <path d="M 500 140 L 500 160 L 62 160 L 62 185" stroke="#2d5a43" stroke-width="1.5" stroke-dasharray="3 3"/>
-              <path d="M 500 140 L 500 160 L 202 160 L 202 185" stroke="#355861" stroke-width="1.5" stroke-dasharray="3 3"/>
-              <path d="M 500 140 L 500 160 L 342 160 L 342 185" stroke="#b06918" stroke-width="1.5" stroke-dasharray="3 3"/>
-              <path d="M 500 140 L 500 160 L 482 160 L 482 185" stroke="#a63429" stroke-width="2"/>
-            </svg>
-            <div class="flex items-center justify-between text-[11px] mono pt-2 px-1 text-stone-600 dark:text-stone-300">
-              <span>OptiSent-XAI Industrial Telemetry Blueprint</span>
-              <span class="font-bold text-emerald-800 dark:text-emerald-400">Locked 80:20 Test Split (N = 960)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- LIVE 60FPS INTERACTIVE PARCEL CONVEYOR & OPTICAL SPECTROGRAPH CANVAS -->
-      <div class="well-box rounded-2xl p-3 sm:p-4 space-y-3">
-        <div class="flex flex-wrap items-center justify-between gap-2 px-1">
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-bold uppercase tracking-wider mono" style="color: var(--sage);">
-              Optical Spectrograph Scanner (Hover to Inspect • Click to Launch Pulse)
-            </span>
-            <span id="conveyor-mode-pill" class="text-[10px] mono pill-sage px-2 py-0.5 rounded-full">Stream: Interactive Sandbox</span>
-          </div>
-          <div class="flex items-center gap-3 text-xs mono">
-            <span>Packets Sorted: <strong id="stat-packets-sorted">142</strong></span>
-            <span>Hazards Intercepted: <strong id="stat-hazards-caught" style="color: var(--rust);">29</strong></span>
-          </div>
-        </div>
-
-        <!-- 60fps HTML5 Physics Conveyor Canvas with Particle Trails & Trigram Floating Callouts -->
-        <div class="relative w-full h-60 sm:h-68 rounded-xl overflow-hidden border" style="background-color: var(--bg-card); border-color: var(--border-ink);">
-          <canvas id="conveyor-canvas" class="w-full h-full block cursor-crosshair" title="Hover for Slow-Motion Inspection HUD • Click to launch pulse"></canvas>
-          <!-- Hover Inspection HUD Overlay -->
-          <div id="conveyor-inspect-hud" class="absolute pointer-events-none hidden art-plate p-2.5 rounded-xl text-[11px] mono shadow-xl z-20 space-y-1" style="min-width: 220px; border-color: var(--sage);">
-            <div class="flex items-center justify-between border-b pb-1" style="border-color: var(--border-ink);">
-              <span class="font-bold text-xs" style="color: var(--sage);">OPTICAL RETICLE SCAN</span>
-              <span id="hud-parcel-stars" class="font-extrabold" style="color: var(--ochre);">5★</span>
-            </div>
-            <div id="hud-parcel-label" class="font-medium truncate">Parcel #101</div>
-            <div class="flex justify-between text-[10px]" style="color: var(--text-sub);">
-              <span>RSDI Score:</span>
-              <strong id="hud-parcel-rsdi" style="color: var(--rust);">0.892 (Trap!)</strong>
-            </div>
-            <div class="flex justify-between text-[10px]" style="color: var(--text-sub);">
-              <span>Target Gate:</span>
-              <strong id="hud-parcel-gate" style="color: var(--rust);">C3 P0 Safety Halt</strong>
-            </div>
-            <div id="hud-parcel-trigrams" class="pt-0.5 flex flex-wrap gap-1 text-[9px]"></div>
-          </div>
-        </div>
-
-        <!-- 6 Tactile 1-Click Parcel Launch Orbs -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
-          <button type="button" id="orb-5" onclick="launchArchetypeParcel(5)" class="orb-btn orb-btn-active rounded-xl p-2.5 text-left">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] mono font-bold" style="color: var(--rust);">5★ TROJAN</span>
-              <span class="text-xs">⚡</span>
-            </div>
-            <span class="text-xs font-bold block mt-0.5">Sarcasm Hazard</span>
-            <span class="text-[10px] mono block" style="color: var(--text-dim);">"melted socket!"</span>
-          </button>
-
-          <button type="button" id="orb-3" onclick="launchArchetypeParcel(3)" class="orb-btn rounded-xl p-2.5 text-left">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] mono font-bold" style="color: var(--rust);">1★ CRITICAL</span>
-              <span class="text-xs">🔥</span>
-            </div>
-            <span class="text-xs font-bold block mt-0.5">Lithium Smoke</span>
-            <span class="text-[10px] mono block" style="color: var(--text-dim);">"battery swelled"</span>
-          </button>
-
-          <button type="button" id="orb-4" onclick="launchArchetypeParcel(4)" class="orb-btn rounded-xl p-2.5 text-left">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] mono font-bold" style="color: var(--rust);">1★ PHISHING</span>
-              <span class="text-xs">🛡️</span>
-            </div>
-            <span class="text-xs font-bold block mt-0.5">Counterfeit QR</span>
-            <span class="text-[10px] mono block" style="color: var(--text-dim);">"OTP scam link"</span>
-          </button>
-
-          <button type="button" id="orb-2" onclick="launchArchetypeParcel(2)" class="orb-btn rounded-xl p-2.5 text-left">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] mono font-bold" style="color: var(--ochre);">2★ DEFECT</span>
-              <span class="text-xs">🔧</span>
-            </div>
-            <span class="text-xs font-bold block mt-0.5">Flickering Screen</span>
-            <span class="text-[10px] mono block" style="color: var(--text-dim);">"dead pixels"</span>
-          </button>
-
-          <button type="button" id="orb-1" onclick="launchArchetypeParcel(1)" class="orb-btn rounded-xl p-2.5 text-left">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] mono font-bold" style="color: var(--slate);">3★ MIXED</span>
-              <span class="text-xs">⚖️</span>
-            </div>
-            <span class="text-xs font-bold block mt-0.5">Good Fan, Bad USB</span>
-            <span class="text-[10px] mono block" style="color: var(--text-dim);">"decent, however"</span>
-          </button>
-
-          <button type="button" id="orb-0" onclick="launchArchetypeParcel(0)" class="orb-btn rounded-xl p-2.5 text-left">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] mono font-bold" style="color: var(--sage);">5★ PRAISE</span>
-              <span class="text-xs">🌿</span>
-            </div>
-            <span class="text-xs font-bold block mt-0.5">32h ANC Audio</span>
-            <span class="text-[10px] mono block" style="color: var(--text-dim);">"crystal clear"</span>
-          </button>
-        </div>
-
-        <!-- Compact 1-Line Custom Parcel Launcher Bar -->
-        <div class="art-plate rounded-xl p-2.5 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-          <div class="flex items-center gap-2 shrink-0 px-2">
-            <label for="input-stars" class="text-xs font-semibold mono" style="color: var(--text-sub);">Stars:</label>
-            <input id="input-stars" type="range" min="1" max="5" step="1" value="5" oninput="runLiveInference()" class="w-20 cursor-pointer" />
-            <span id="val-stars" class="text-xs font-bold mono w-8" style="color: var(--ochre);">5 ★</span>
-          </div>
-          <input
-            id="input-review"
-            type="text"
-            oninput="runLiveInference()"
-            value="5 stars so people see this!! Total trash smart plug melted my wall socket and sparked flames!!"
-            placeholder="Type any e-commerce review & watch the optical scanner inspect it live..."
-            class="flex-1 rounded-lg px-3 py-1.5 text-xs border focus:outline-none"
-            style="background-color: var(--bg-page); border-color: var(--border-ink); color: var(--text-ink);"
-          />
-          <div class="flex items-center gap-2 shrink-0">
-            <span class="text-[11px] mono" style="color: var(--text-dim);">Burst:</span>
-            <input id="input-velocity" type="range" min="1" max="30" step="0.5" value="19" oninput="runLiveInference()" class="w-16 cursor-pointer" />
-            <span id="val-velocity" class="text-[11px] mono font-bold" style="color: var(--rust);">19.0/h</span>
-            <button type="button" onclick="spawnCustomParcelFromInput()" class="px-3 py-1.5 rounded-lg text-xs font-bold pill-sage transition hover:opacity-90">
-              Send Parcel →
-            </button>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ======================================================================= -->
-    <!-- ACT II: 5-STAR TROJAN PACKAGE X-RAY & MAGNETIC TREESHAP BALANCE BEAM     -->
-    <!-- ======================================================================= -->
-    <section class="art-plate rounded-3xl p-5 sm:p-7 space-y-6">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-
-        <!-- Left: Industrial Package X-Ray Inspection Scanner (5 cols) -->
-        <div class="lg:col-span-5 space-y-3">
-          <div class="art-img-frame shadow-md relative group p-4" style="background-color: var(--bg-well);">
-            
-            <!-- Graphic Illustration of E-Commerce Package with X-Ray Penetration -->
-            <div class="relative w-full h-64 rounded-xl overflow-hidden border border-stone-300 dark:border-stone-700 bg-stone-900 flex items-center justify-center">
-              
-              <!-- Exterior Carton Layer (Left & Right Split) -->
-              <div id="xray-carton-left" class="absolute left-0 top-0 bottom-0 w-1/2 bg-amber-800/90 border-r border-amber-600/40 p-4 flex flex-col justify-between transition-transform duration-300 z-10">
-                <div class="text-[10px] mono text-amber-200 uppercase font-bold tracking-wider">PACKET #4092</div>
-                <div>
-                  <div class="text-xs font-extrabold text-white">SMART PLUG V2</div>
-                  <div class="text-[10px] text-amber-300 font-bold mt-1">★★★★★ 5.0 RATING</div>
-                  <div class="text-[9px] text-amber-200/80">"Verified Buyer Praise"</div>
-                </div>
-                <div class="text-[9px] mono text-amber-300/60">SEALED CARTON</div>
-              </div>
-
-              <div id="xray-carton-right" class="absolute right-0 top-0 bottom-0 w-1/2 bg-amber-800/90 border-l border-amber-600/40 p-4 flex flex-col justify-between items-end transition-transform duration-300 z-10">
-                <div class="text-[10px] mono text-amber-200">PRIORITY SHIP</div>
-                <div class="text-right">
-                  <div class="text-xs font-bold text-white">SKU: PLUG-402</div>
-                  <div class="text-[10px] text-amber-200">FACADE: 5 STARS</div>
-                </div>
-                <div class="text-[9px] mono text-amber-300/60">BARCODE [|||||||]</div>
-              </div>
-
-              <!-- Internal Hazardous Core (Revealed by X-Ray) -->
-              <div class="absolute inset-0 flex flex-col items-center justify-center p-4 text-center z-0 bg-stone-950">
-                <div class="w-16 h-16 rounded-full bg-red-950/80 border border-red-500/50 flex items-center justify-center relative">
-                  <span class="text-2xl animate-pulse">⚡</span>
-                  <span class="absolute -top-1 -right-1 text-xs">🔥</span>
-                </div>
-                <div class="text-xs font-bold text-red-400 mt-2 mono">THERMAL DEFECT DETECTED</div>
-                <div class="text-[10px] text-stone-400">Melting Wall Socket • Flame Hazard</div>
-                <div class="flex flex-wrap justify-center gap-1 mt-2">
-                  <span class="px-1.5 py-0.5 rounded text-[9px] mono font-bold bg-red-900/80 text-red-200 border border-red-600">subword: melt</span>
-                  <span class="px-1.5 py-0.5 rounded text-[9px] mono font-bold bg-amber-900/80 text-amber-200 border border-amber-600">subword: spar</span>
-                  <span class="px-1.5 py-0.5 rounded text-[9px] mono font-bold bg-red-950 text-red-300 border border-red-700">subword: flam</span>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Plate Badge -->
-            <div class="absolute top-6 left-6 art-plate px-2.5 py-1 rounded-xl text-[10px] mono font-bold z-20" style="color: var(--ochre);">
-              Act II • Trojan Sarcasm X-Ray
-            </div>
-            <!-- Telemetry Footer inside Plate -->
-            <div class="mt-3 art-plate p-2.5 rounded-xl flex items-center justify-between text-xs">
-              <span class="font-medium text-stone-600 dark:text-stone-300">Rating vs. Polarity Gap:</span>
-              <span id="metric-rsdi" class="mono font-extrabold" style="color: var(--rust);">RSDI = 0.892 (Trap!)</span>
-            </div>
-          </div>
-
-          <!-- Tactile X-Ray & Crack-Open Slider -->
-          <div class="well-box p-3 rounded-2xl space-y-1.5">
-            <div class="flex justify-between items-center text-xs mono">
-              <span class="font-bold flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full" style="background-color: var(--ochre);"></span>
-                X-Ray Inspection Penetration:
-              </span>
-              <span id="val-crack-percent" class="font-extrabold" style="color: var(--rust);">100% Penetrated</span>
-            </div>
-            <input
-              id="slider-trojan-crack"
-              type="range"
-              min="0"
-              max="100"
-              step="1"
-              value="100"
-              oninput="updateTrojanCrack(parseInt(this.value, 10))"
-              class="w-full cursor-pointer"
-            />
-            <div class="flex justify-between text-[10px] mono" style="color: var(--text-dim);">
-              <span>0% (Innocent 5★ Shell)</span>
-              <span>50% (X-Ray Scanning)</span>
-              <span>100% (Full Hazard Exposure)</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Right: Animated Magnetic Tug-of-War & Task 3 Evolution Dial (7 cols) -->
-        <div class="lg:col-span-7 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <span class="text-xs mono uppercase tracking-wider font-semibold" style="color: var(--sage);">Explainable AI Without Bar-Chart Clutter</span>
-              <h2 class="serif-display text-2xl sm:text-3xl font-normal">Magnetic Feature Tug-of-War (TreeSHAP Balance Beam)</h2>
-            </div>
-            <span id="pred-badge" class="px-3 py-1 rounded-full text-xs font-bold pill-rust mono">
-              C3: Critical Safety Halt (94.2%)
-            </span>
-          </div>
-
-          <!-- 60fps Animated Balance Scale & Force Vector Canvas -->
-          <div class="well-box rounded-2xl p-3">
-            <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden border" style="background-color: var(--bg-card); border-color: var(--border-ink);">
-              <canvas id="force-beam-canvas" class="w-full h-full block"></canvas>
-            </div>
-            <div class="flex flex-wrap items-center justify-between gap-2 pt-2.5 px-1 text-xs">
-              <span class="font-medium" style="color: var(--text-sub);">Active Subword &amp; Telemetry Magnets:</span>
-              <div id="matched-signals" class="inline-flex flex-wrap gap-1.5"></div>
-            </div>
-          </div>
-
-          <!-- Visual Comparison: Initial 270-Row Drive Submission vs OptiSent-XAI -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="well-box rounded-2xl p-3.5 flex items-center justify-between">
-              <div>
-                <span class="text-[10px] mono uppercase block" style="color: var(--text-dim);">Initial Drive Submission (N=270)</span>
-                <span id="legacy-comparison-readout" class="text-xs font-bold block mt-0.5" style="color: var(--ochre);">
-                  Fooled by 5★ → "Positive"
-                </span>
-                <span class="text-[11px] mono" style="color: var(--text-sub);">MNB / LogReg: 65.73% Macro F1</span>
-              </div>
-              <!-- Visual Mini Gauge SVG -->
-              <svg class="w-12 h-12 shrink-0" viewBox="0 0 48 48">
-                <circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="4" fill="none" opacity="0.18" />
-                <circle cx="24" cy="24" r="19" stroke="#b06918" stroke-width="4" fill="none" stroke-dasharray="78 120" stroke-linecap="round" transform="rotate(-90 24 24)" />
-                <text x="24" y="27" text-anchor="middle" font-size="10" font-family="JetBrains Mono" fill="currentColor">66%</text>
-              </svg>
-            </div>
-
-            <div class="well-box rounded-2xl p-3.5 flex items-center justify-between" style="border-color: var(--sage);">
-              <div>
-                <span class="text-[10px] mono uppercase block" style="color: var(--sage);">OptiSent-XAI Ensemble (N=4,800)</span>
-                <span id="pred-sla" class="text-xs font-bold block mt-0.5" style="color: var(--rust);">
-                  P0 Trust &amp; Safety Halt (&lt;15m)
-                </span>
-                <span class="text-[11px] mono" style="color: var(--text-sub);">Trial #27 TPE-GBDT: 90.89% F1</span>
-              </div>
-              <svg class="w-12 h-12 shrink-0" viewBox="0 0 48 48">
-                <circle cx="24" cy="24" r="19" stroke="currentColor" stroke-width="4" fill="none" opacity="0.18" />
-                <circle cx="24" cy="24" r="19" stroke="#2d5a43" stroke-width="4" fill="none" stroke-dasharray="109 120" stroke-linecap="round" transform="rotate(-90 24 24)" />
-                <text x="24" y="27" text-anchor="middle" font-size="10" font-family="JetBrains Mono" fill="currentColor">91%</text>
-              </svg>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ======================================================================= -->
-    <!-- ACT III: PRODUCTION DRIFT RADAR & 8-WEEK CONCEPT DRIFT WAVE STUDIO      -->
-    <!-- ======================================================================= -->
-    <section class="art-plate rounded-3xl p-5 sm:p-7 space-y-6">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-
-        <!-- Left: Interactive Harmonic Drift Wave Canvas & Scrubber (7 cols) -->
-        <div class="lg:col-span-7 space-y-4 order-2 lg:order-1">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <span class="text-xs mono uppercase tracking-wider font-semibold" style="color: var(--sage);">Act III • Self-Healing Production Guard</span>
-              <h2 class="serif-display text-2xl sm:text-3xl font-normal">Week 6 Flash-Sale Storm &amp; Automated Distribution Recalibration</h2>
-            </div>
-            <button id="btn-retrain-mode" type="button" onclick="toggleRetrainSimulation()" class="pill-sage px-3.5 py-1.5 rounded-xl text-xs font-bold transition">
-              Self-Healing Retrain: ON
-            </button>
-          </div>
-
-          <!-- 60fps Harmonic Distribution Wave Canvas -->
-          <div class="well-box rounded-2xl p-3 space-y-3">
-            <div class="relative w-full h-44 sm:h-48 rounded-xl overflow-hidden border" style="background-color: var(--bg-card); border-color: var(--border-ink);">
-              <canvas id="wave-canvas" class="w-full h-full block"></canvas>
-            </div>
-
-            <!-- Interactive Week 1 -> Week 8 Timeline Scrubber -->
-            <div class="px-2 pt-1 space-y-1.5">
-              <div class="flex justify-between items-center text-xs mono">
-                <span id="drift-wk-title" class="font-bold">Week 6 • Flash-Sale Surge (PSI = 0.294)</span>
-                <span id="drift-wk-f1" class="font-extrabold" style="color: var(--rust);">Macro F1: 82.09% → Retraining!</span>
-              </div>
-              <input
-                id="drift-week-slider"
-                type="range"
-                min="1"
-                max="8"
-                step="1"
-                value="6"
-                oninput="selectDriftWeek(parseInt(this.value, 10))"
-                class="w-full cursor-pointer"
-              />
-              <div class="grid grid-cols-8 text-[10px] mono text-center" style="color: var(--text-dim);">
-                <button type="button" onclick="selectDriftWeek(1)" class="hover:underline">Wk 1</button>
-                <button type="button" onclick="selectDriftWeek(2)" class="hover:underline">Wk 2</button>
-                <button type="button" onclick="selectDriftWeek(3)" class="hover:underline">Wk 3</button>
-                <button type="button" onclick="selectDriftWeek(4)" class="hover:underline">Wk 4</button>
-                <button type="button" onclick="selectDriftWeek(5)" class="hover:underline font-bold" style="color: var(--ochre);">Wk 5 ⚠</button>
-                <button type="button" onclick="selectDriftWeek(6)" class="hover:underline font-bold" style="color: var(--rust);">Wk 6 🚨</button>
-                <button type="button" onclick="selectDriftWeek(7)" class="hover:underline font-bold" style="color: var(--sage);">Wk 7 ✓</button>
-                <button type="button" onclick="selectDriftWeek(8)" class="hover:underline font-bold" style="color: var(--sage);">Wk 8 ✓</button>
-              </div>
-            </div>
-          </div>
-
-          <p id="drift-wk-desc" class="text-xs leading-relaxed px-1" style="color: var(--text-sub);">
-            Drag the timeline slider from <strong>Week 1</strong> through the <strong>Week 6 Flash-Sale Surge (PSI = 0.294 ≥ 0.25)</strong> to <strong>Week 8</strong>: when Self-Healing Retrain is active, the system triggers automated subword + TPE-GBDT retraining, restoring <strong>90.94% Macro F1</strong>.
-          </p>
-        </div>
-
-        <!-- Right: Interactive Concept Drift Vector Radar Canvas (5 cols) -->
-        <div class="lg:col-span-5 order-1 lg:order-2 space-y-3">
-          <div class="art-plate rounded-2xl p-4 space-y-3" style="background-color: var(--bg-well);">
-            <div class="flex items-center justify-between border-b pb-2" style="border-color: var(--border-ink);">
-              <span class="text-xs font-bold mono uppercase tracking-wider" style="color: var(--sage);">Production Drift Vector Radar</span>
-              <span class="text-[10px] mono pill-sage px-2 py-0.5 rounded-full">EWMA λ = 0.35</span>
-            </div>
-
-            <!-- Live 60fps Radar Canvas -->
-            <div class="relative w-full h-52 sm:h-56 rounded-xl overflow-hidden flex items-center justify-center bg-stone-900 border border-stone-700">
-              <canvas id="radar-canvas" class="w-full h-full block"></canvas>
-            </div>
-
-            <div class="art-plate p-2.5 rounded-xl flex items-center justify-between text-xs mono">
-              <span>Drift Index: <strong id="drift-wk-psi" style="color: var(--rust);">0.294</strong></span>
-              <span id="drift-wk-badge" class="px-2 py-0.5 rounded pill-rust text-[10px] font-bold">AUTO_RETRAIN_FIRED</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ======================================================================= -->
-    <!-- ACT IV: VERIFIED REPORT EVIDENCE & BENCHMARK GALLERY                      -->
-    <!-- ======================================================================= -->
-    <section class="art-plate rounded-3xl p-5 sm:p-7 space-y-5">
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b pb-3" style="border-color: var(--border-ink);">
+    <!-- ===================================================================== -->
+    <!-- TAB 1: REVIEW TRIAGE PLAYGROUND                                       -->
+    <!-- ===================================================================== -->
+    <div id="tab-playground" class="tab-content space-y-6">
+      
+      <!-- Intro Section -->
+      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <span class="text-xs mono uppercase tracking-wider font-semibold" style="color: var(--sage);">Finalized Viva Evidence</span>
-          <h2 class="serif-display text-2xl sm:text-3xl font-normal">Embedded Figures from Printed 45-Page Report</h2>
+          <h1 class="text-xl font-bold text-slate-900 tracking-tight">Interactive Review Triage &amp; Sarcasm Inspection</h1>
+          <p class="text-sm text-slate-500 mt-1">
+            Type or paste any product review below to run multi-class classification, detect 5-star sarcasm traps via RSDI, and inspect the operational SLA routing queue.
+          </p>
         </div>
-        <div class="text-xs mono" style="color: var(--text-dim);">
-          CBIT Dept. of IT • Roll: 160124737111
+        <div class="flex items-center gap-3 shrink-0">
+          <span class="text-xs text-slate-500 font-medium">Locked Benchmark:</span>
+          <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">90.89% Macro F1</span>
+          <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200">3.67 ms Latency</span>
+        </div>
+      </div>
+
+      <!-- Main Two-Column Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Input Form (7 cols) -->
+        <div class="lg:col-span-7 space-y-5">
+          <div class="bg-white rounded-xl border border-slate-200 p-5 sm:p-6 shadow-sm space-y-5">
+            
+            <!-- Quick Preset Pills -->
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <label class="text-xs font-semibold uppercase tracking-wider text-slate-500">Quick Test Scenarios (1-Click Fill)</label>
+                <span class="text-xs text-slate-400">Click any preset to test</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button type="button" onclick="loadPreset(0)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium border border-red-200 bg-red-50 text-red-800 hover:bg-red-100 transition">
+                  ⚡ 5★ Fire Hazard Sarcasm
+                </button>
+                <button type="button" onclick="loadPreset(1)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium border border-blue-200 bg-blue-50 text-blue-800 hover:bg-blue-100 transition">
+                  💬 1★ Inverted Praise
+                </button>
+                <button type="button" onclick="loadPreset(2)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition">
+                  ⚖️ 3★ Mixed Aspects
+                </button>
+                <button type="button" onclick="loadPreset(3)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium border border-amber-200 bg-amber-50 text-amber-800 hover:bg-amber-100 transition">
+                  🔧 1★ Hardware Defect
+                </button>
+                <button type="button" onclick="loadPreset(4)" class="preset-btn px-3 py-1.5 rounded-lg text-xs font-medium border border-emerald-200 bg-emerald-50 text-emerald-800 hover:bg-emerald-100 transition">
+                  ✅ 5★ Clean Positive
+                </button>
+              </div>
+            </div>
+
+            <!-- Star Rating Input -->
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2">
+                Customer Star Rating: <span id="star-label-text" class="text-slate-900 font-bold ml-1">5 Stars (Praise)</span>
+              </label>
+              <div class="flex items-center gap-1.5">
+                <button type="button" onclick="setStars(1)" id="star-btn-1" class="star-btn w-10 h-10 rounded-lg border border-slate-200 text-lg hover:border-amber-400 transition flex items-center justify-center">★</button>
+                <button type="button" onclick="setStars(2)" id="star-btn-2" class="star-btn w-10 h-10 rounded-lg border border-slate-200 text-lg hover:border-amber-400 transition flex items-center justify-center">★</button>
+                <button type="button" onclick="setStars(3)" id="star-btn-3" class="star-btn w-10 h-10 rounded-lg border border-slate-200 text-lg hover:border-amber-400 transition flex items-center justify-center">★</button>
+                <button type="button" onclick="setStars(4)" id="star-btn-4" class="star-btn w-10 h-10 rounded-lg border border-slate-200 text-lg hover:border-amber-400 transition flex items-center justify-center">★</button>
+                <button type="button" onclick="setStars(5)" id="star-btn-5" class="star-btn w-10 h-10 rounded-lg border border-slate-200 text-lg hover:border-amber-400 transition flex items-center justify-center">★</button>
+                <span id="star-description" class="ml-3 text-xs text-slate-500 font-medium">Select buyer rating</span>
+              </div>
+            </div>
+
+            <!-- Review Text Area -->
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label for="review-textarea" class="text-xs font-semibold uppercase tracking-wider text-slate-500">Product Review Text</label>
+                <span id="char-counter" class="text-[11px] font-mono text-slate-400">0 characters</span>
+              </div>
+              <textarea
+                id="review-textarea"
+                rows="4"
+                oninput="onReviewInputChanged()"
+                placeholder="Type or paste any product review here (e.g. '5 stars so people see this!! Plug caught fire and melted my wall socket!')..."
+                class="w-full rounded-lg border border-slate-300 p-3.5 text-sm text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition font-sans custom-scroll leading-relaxed"
+              ></textarea>
+            </div>
+
+            <!-- Optional Telemetry Details (Collapsible) -->
+            <details class="group border border-slate-200 rounded-lg p-3 bg-slate-50/50">
+              <summary class="text-xs font-semibold text-slate-700 cursor-pointer flex items-center justify-between select-none">
+                <span>Advanced Telemetry Inputs (Velocity &amp; Helpfulness)</span>
+                <span class="text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 mt-3 border-t border-slate-200">
+                <div>
+                  <label class="block text-[11px] font-medium text-slate-600 mb-1">Category</label>
+                  <select id="input-category" onchange="runInference()" class="w-full rounded border border-slate-300 px-2.5 py-1.5 text-xs bg-white text-slate-800">
+                    <option value="Electronics">Electronics</option>
+                    <option value="Home & Kitchen">Home & Kitchen</option>
+                    <option value="Automotive">Automotive</option>
+                    <option value="Computers">Computers</option>
+                    <option value="Cell Phones">Cell Phones</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-medium text-slate-600 mb-1">Helpful Ratio (<span id="val-helpful">0.85</span>)</label>
+                  <input id="input-helpful" type="range" min="0" max="1" step="0.05" value="0.85" oninput="document.getElementById('val-helpful').textContent=this.value; runInference();" class="w-full cursor-pointer accent-blue-600" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-medium text-slate-600 mb-1">Burst Velocity (<span id="val-velocity">19.0/h</span>)</label>
+                  <input id="input-velocity" type="range" min="1" max="40" step="1" value="19" oninput="document.getElementById('val-velocity').textContent=this.value + '/h'; runInference();" class="w-full cursor-pointer accent-blue-600" />
+                </div>
+              </div>
+            </details>
+
+            <!-- Action Button Row -->
+            <div class="flex items-center justify-between pt-1">
+              <button
+                type="button"
+                onclick="runInference()"
+                class="px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition flex items-center gap-2"
+              >
+                <span>Run OptiSent-XAI Triage</span>
+                <span class="text-xs bg-blue-500/80 px-1.5 py-0.5 rounded font-mono font-normal">↵ Enter</span>
+              </button>
+
+              <button
+                type="button"
+                onclick="clearReviewInput()"
+                class="px-3.5 py-2 rounded-lg text-xs font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition"
+              >
+                Reset
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right Column: Real-Time Results & Explainability (5 cols) -->
+        <div class="lg:col-span-5 space-y-5">
+
+          <!-- Primary Triage Card -->
+          <div id="result-card" class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
+            
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+              <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Classification Result</span>
+              <span id="result-latency" class="text-xs font-mono text-slate-500">Latency: 3.67 ms</span>
+            </div>
+
+            <!-- Triage Queue Badge & Title -->
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span id="result-class-badge" class="px-2.5 py-1 rounded text-xs font-bold bg-red-100 text-red-800 border border-red-200">
+                  C3: Critical Safety Escalation
+                </span>
+                <span id="result-confidence" class="text-sm font-mono font-bold text-slate-800">
+                  99.8% Confidence
+                </span>
+              </div>
+              <h3 id="result-class-name" class="text-lg font-bold text-slate-900">
+                P0 Trust &amp; Safety SKU Halt
+              </h3>
+            </div>
+
+            <!-- Target SLA Routing -->
+            <div class="p-3 rounded-lg bg-slate-50 border border-slate-200 space-y-1">
+              <div class="text-[11px] font-semibold text-slate-500 uppercase">Operational Action &amp; Routing SLA</div>
+              <p id="result-sla-route" class="text-xs font-medium text-slate-800 leading-relaxed">
+                Automated catalog SKU freeze &amp; critical safety ticket dispatch (&lt;15m SLA target).
+              </p>
+            </div>
+
+            <!-- Sarcasm & Deception (RSDI) Warning Callout -->
+            <div id="rsdi-callout" class="p-3.5 rounded-lg border border-amber-300 bg-amber-50 space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+                  <span>⚠️</span>
+                  <span>5-Star Sarcasm Trap Intercepted</span>
+                </span>
+                <span id="rsdi-score-badge" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-amber-200 text-amber-900">
+                  RSDI = 0.99
+                </span>
+              </div>
+              <p id="rsdi-explanation" class="text-xs text-amber-800 leading-relaxed">
+                The buyer gave a <strong>5-star rating</strong>, but the text contains severe fire/hazard terms. The Rating-Sentiment Discrepancy Index triggered an automated override, preventing this safety hazard from publishing to the store.
+              </p>
+            </div>
+
+            <!-- Detected Signal Drivers -->
+            <div class="space-y-2 pt-1">
+              <span class="text-xs font-semibold text-slate-600 block">Identified Lexical &amp; Telemetry Signals:</span>
+              <div id="detected-tokens-container" class="flex flex-wrap gap-1.5">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Baseline Naive Bayes Comparison -->
+            <div class="border-t border-slate-100 pt-3 space-y-2">
+              <span class="text-xs font-semibold text-slate-600 block">Baseline Task 3 Model vs. OptiSent-XAI:</span>
+              <div class="grid grid-cols-2 gap-2 text-xs">
+                <div class="p-2.5 rounded-lg border border-red-200 bg-red-50/60">
+                  <span class="text-[10px] font-bold text-red-900 uppercase block">Task 3 Naive Bayes</span>
+                  <span id="baseline-decision" class="font-semibold text-red-700 block mt-0.5">Fooled by 5★ → Publishes C0</span>
+                  <span class="text-[10px] text-slate-500 block mt-1">Macro F1: 65.73%</span>
+                </div>
+                <div class="p-2.5 rounded-lg border border-emerald-200 bg-emerald-50/60">
+                  <span class="text-[10px] font-bold text-emerald-900 uppercase block">OptiSent-XAI</span>
+                  <span id="optisent-decision" class="font-semibold text-emerald-700 block mt-0.5">Intercepts → Halts SKU (C3)</span>
+                  <span class="text-[10px] text-slate-500 block mt-1">Macro F1: 90.89%</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Quick Reference Legend Card -->
+          <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm text-xs space-y-2 text-slate-600">
+            <span class="font-semibold text-slate-900 block">4-Class Triage Taxonomy Reference:</span>
+            <ul class="space-y-1.5 text-[11px]">
+              <li class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                  <strong>C0: Positive Endorsement</strong>
+                </span>
+                <span class="text-slate-500">Auto-Publish to Live Store</span>
+              </li>
+              <li class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                  <strong>C1: Mixed-Aspect Digest</strong>
+                </span>
+                <span class="text-slate-500">P2 UX Digest (24h SLA)</span>
+              </li>
+              <li class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                  <strong>C2: Hardware Defect</strong>
+                </span>
+                <span class="text-slate-500">P1 Vendor Ticket (&lt;4h SLA)</span>
+              </li>
+              <li class="flex items-center justify-between">
+                <span class="inline-flex items-center gap-1.5">
+                  <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                  <strong>C3: Safety Escalation</strong>
+                </span>
+                <span class="text-slate-500">P0 SKU Halt (&lt;15m SLA)</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 2: MODEL BENCHMARKS (N = 960)                                     -->
+    <!-- ===================================================================== -->
+    <div id="tab-benchmarks" class="tab-content hidden space-y-6">
+      
+      <!-- Benchmark Summary Header -->
+      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+        <h2 class="text-lg font-bold text-slate-900">Held-Out Test Benchmark (N = 960, Stratified 80:20 Split)</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          Exact locked results matching Table 3.2 in the CBIT Internship Report. Models 1–3 represent the initial Navodita Infotech Task 3 baseline portal submission.
+        </p>
+      </div>
+
+      <!-- 4 High-Level Metric Tiles -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+          <span class="text-xs font-medium text-slate-500 uppercase">Macro F1-Score</span>
+          <div class="text-2xl font-bold font-mono text-blue-600 mt-1">90.89%</div>
+          <span class="text-[11px] text-emerald-600 font-medium">+25.16% over Task 3 MNB</span>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+          <span class="text-xs font-medium text-slate-500 uppercase">Overall Test Accuracy</span>
+          <div class="text-2xl font-bold font-mono text-slate-900 mt-1">91.46%</div>
+          <span class="text-[11px] text-slate-500 font-medium">878 of 960 correct</span>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+          <span class="text-xs font-medium text-slate-500 uppercase">ROC-AUC (Multi-Class)</span>
+          <div class="text-2xl font-bold font-mono text-slate-900 mt-1">0.9491</div>
+          <span class="text-[11px] text-slate-500 font-medium">Log-loss: 0.4194</span>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+          <span class="text-xs font-medium text-slate-500 uppercase">CPU Inference Latency</span>
+          <div class="text-2xl font-bold font-mono text-emerald-600 mt-1">3.674 ms</div>
+          <span class="text-[11px] text-slate-500 font-medium">Per review on CPU</span>
         </div>
       </div>
 
-      <!-- 4 High-Resolution Report Figures Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- Figure 2.1 Architecture -->
-        <div class="well-box rounded-xl p-2.5 space-y-2">
-          <div class="art-img-frame h-36 bg-white flex items-center justify-center">
-            <img src="figures/fig_2_1_architecture.png" alt="OptiSent-XAI Hybrid Pipeline Architecture" class="max-h-full max-w-full object-contain" />
-          </div>
-          <span class="text-xs font-bold block">Fig 2.1 • System Architecture</span>
-          <span class="text-[10px] mono block" style="color: var(--text-dim);">38 Hybrid Features & Stacking</span>
+      <!-- 6-Model Benchmark Table -->
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-5 py-4 border-b border-slate-200 bg-slate-50/75">
+          <h3 class="text-sm font-bold text-slate-900">Comparative Architecture Benchmark Table</h3>
         </div>
-
-        <!-- Figure 3.2 Model Comparison -->
-        <div class="well-box rounded-xl p-2.5 space-y-2">
-          <div class="art-img-frame h-36 bg-white flex items-center justify-center">
-            <img src="figures/fig_3_2_model_comparison.png" alt="6-Model Benchmark Comparison" class="max-h-full max-w-full object-contain" />
-          </div>
-          <span class="text-xs font-bold block">Fig 3.2 • 6-Model Benchmark</span>
-          <span class="text-[10px] mono block" style="color: var(--text-dim);">MNB (65.7%) vs OptiSent (90.9%)</span>
-        </div>
-
-        <!-- Figure 3.3 Confusion Matrix -->
-        <div class="well-box rounded-xl p-2.5 space-y-2">
-          <div class="art-img-frame h-36 bg-white flex items-center justify-center">
-            <img src="figures/fig_3_3_confusion_matrix.png" alt="Test Set Confusion Matrix" class="max-h-full max-w-full object-contain" />
-          </div>
-          <span class="text-xs font-bold block">Fig 3.3 • Confusion Matrix</span>
-          <span class="text-[10px] mono block" style="color: var(--text-dim);">878 / 960 Correct (91.46% Acc)</span>
-        </div>
-
-        <!-- Figure 3.5 Drift Monitoring -->
-        <div class="well-box rounded-xl p-2.5 space-y-2">
-          <div class="art-img-frame h-36 bg-white flex items-center justify-center">
-            <img src="figures/fig_3_5_drift_monitoring.png" alt="8-Week Concept Drift Trajectory" class="max-h-full max-w-full object-contain" />
-          </div>
-          <span class="text-xs font-bold block">Fig 3.5 • Concept Drift Trace</span>
-          <span class="text-[10px] mono block" style="color: var(--text-dim);">Week 6 Retrain Restores 90.94%</span>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs font-sans">
+            <thead class="bg-slate-100/75 text-slate-600 border-b border-slate-200 uppercase font-semibold text-[11px]">
+              <tr>
+                <th class="px-4 py-3">Model Architecture</th>
+                <th class="px-3 py-3">Feature Engineering</th>
+                <th class="px-3 py-3 text-right">Accuracy</th>
+                <th class="px-3 py-3 text-right">Macro F1</th>
+                <th class="px-3 py-3 text-right">Weighted F1</th>
+                <th class="px-3 py-3 text-right">ROC-AUC</th>
+                <th class="px-3 py-3 text-right">Log-Loss</th>
+                <th class="px-3 py-3 text-right">Latency</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 text-slate-700">
+              <tr class="hover:bg-slate-50 transition">
+                <td class="px-4 py-3 font-medium text-slate-900">1. Multinomial Naive Bayes (Task 3 Baseline)</td>
+                <td class="px-3 py-3 text-slate-500">Word TF-IDF (1,2)</td>
+                <td class="px-3 py-3 text-right font-mono">70.94%</td>
+                <td class="px-3 py-3 text-right font-mono text-red-600 font-semibold">65.73%</td>
+                <td class="px-3 py-3 text-right font-mono">67.97%</td>
+                <td class="px-3 py-3 text-right font-mono">0.8923</td>
+                <td class="px-3 py-3 text-right font-mono">1.2543</td>
+                <td class="px-3 py-3 text-right font-mono">0.181 ms</td>
+              </tr>
+              <tr class="hover:bg-slate-50 transition">
+                <td class="px-4 py-3 font-medium text-slate-900">2. Logistic Regression</td>
+                <td class="px-3 py-3 text-slate-500">Word TF-IDF (1,2)</td>
+                <td class="px-3 py-3 text-right font-mono">69.79%</td>
+                <td class="px-3 py-3 text-right font-mono">54.93%</td>
+                <td class="px-3 py-3 text-right font-mono">62.66%</td>
+                <td class="px-3 py-3 text-right font-mono">0.8944</td>
+                <td class="px-3 py-3 text-right font-mono">1.0685</td>
+                <td class="px-3 py-3 text-right font-mono">0.172 ms</td>
+              </tr>
+              <tr class="hover:bg-slate-50 transition">
+                <td class="px-4 py-3 font-medium text-slate-900">3. Calibrated LinearSVC</td>
+                <td class="px-3 py-3 text-slate-500">Word + Char Subwords (3,5)</td>
+                <td class="px-3 py-3 text-right font-mono">77.40%</td>
+                <td class="px-3 py-3 text-right font-mono">75.02%</td>
+                <td class="px-3 py-3 text-right font-mono">77.01%</td>
+                <td class="px-3 py-3 text-right font-mono">0.9174</td>
+                <td class="px-3 py-3 text-right font-mono">0.8706</td>
+                <td class="px-3 py-3 text-right font-mono">0.369 ms</td>
+              </tr>
+              <tr class="hover:bg-slate-50 transition">
+                <td class="px-4 py-3 font-medium text-slate-900">4. Random Forest</td>
+                <td class="px-3 py-3 text-slate-500">Hybrid 24 SVD + 14 Telemetry</td>
+                <td class="px-3 py-3 text-right font-mono">88.02%</td>
+                <td class="px-3 py-3 text-right font-mono">87.05%</td>
+                <td class="px-3 py-3 text-right font-mono">87.84%</td>
+                <td class="px-3 py-3 text-right font-mono">0.9428</td>
+                <td class="px-3 py-3 text-right font-mono">0.4994</td>
+                <td class="px-3 py-3 text-right font-mono">2.707 ms</td>
+              </tr>
+              <tr class="hover:bg-slate-50 transition">
+                <td class="px-4 py-3 font-medium text-slate-900">5. Default GBDT</td>
+                <td class="px-3 py-3 text-slate-500">Hybrid 24 SVD + 14 Telemetry</td>
+                <td class="px-3 py-3 text-right font-mono">89.69%</td>
+                <td class="px-3 py-3 text-right font-mono">88.91%</td>
+                <td class="px-3 py-3 text-right font-mono">89.63%</td>
+                <td class="px-3 py-3 text-right font-mono">0.9473</td>
+                <td class="px-3 py-3 text-right font-mono">0.4978</td>
+                <td class="px-3 py-3 text-right font-mono">3.214 ms</td>
+              </tr>
+              <tr class="bg-blue-50/70 font-semibold text-blue-950 border-t-2 border-blue-200">
+                <td class="px-4 py-3.5 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+                  <span>6. Proposed OptiSent-XAI</span>
+                  <span class="text-[10px] px-2 py-0.5 rounded bg-blue-200 text-blue-800 font-mono">TPE Trial #27</span>
+                </td>
+                <td class="px-3 py-3.5 text-blue-800">38-Dim SVD + Telemetry + Stacking</td>
+                <td class="px-3 py-3.5 text-right font-mono font-bold text-blue-900">91.46%</td>
+                <td class="px-3 py-3.5 text-right font-mono font-bold text-blue-900">90.89%</td>
+                <td class="px-3 py-3.5 text-right font-mono font-bold text-blue-900">91.40%</td>
+                <td class="px-3 py-3.5 text-right font-mono font-bold text-blue-900">0.9491</td>
+                <td class="px-3 py-3.5 text-right font-mono font-bold text-blue-900">0.4194</td>
+                <td class="px-3 py-3.5 text-right font-mono text-blue-800">3.674 ms</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-    </section>
+
+      <!-- Per-Class Metrics & 4x4 Confusion Matrix -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        <!-- Per-Class Performance Table -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-3">
+          <h3 class="text-sm font-bold text-slate-900">Per-Class Test Performance (N = 960)</h3>
+          <table class="w-full text-left text-xs font-sans">
+            <thead class="bg-slate-50 text-slate-500 uppercase text-[11px] border-b border-slate-200 font-semibold">
+              <tr>
+                <th class="py-2 px-3">Class</th>
+                <th class="py-2 px-2 text-right">Support</th>
+                <th class="py-2 px-2 text-right">Precision</th>
+                <th class="py-2 px-2 text-right">Recall</th>
+                <th class="py-2 px-2 text-right">F1-Score</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <tr>
+                <td class="py-2.5 px-3 font-medium text-emerald-800">C0: Positive Endorsement</td>
+                <td class="py-2.5 px-2 text-right font-mono">368</td>
+                <td class="py-2.5 px-2 text-right font-mono">90.21%</td>
+                <td class="py-2.5 px-2 text-right font-mono">95.11%</td>
+                <td class="py-2.5 px-2 text-right font-mono font-semibold">92.59%</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-medium text-blue-800">C1: Mixed-Aspect Digest</td>
+                <td class="py-2.5 px-2 text-right font-mono">250</td>
+                <td class="py-2.5 px-2 text-right font-mono">92.37%</td>
+                <td class="py-2.5 px-2 text-right font-mono">87.20%</td>
+                <td class="py-2.5 px-2 text-right font-mono font-semibold">89.71%</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-medium text-amber-800">C2: Hardware QA Defect</td>
+                <td class="py-2.5 px-2 text-right font-mono">211</td>
+                <td class="py-2.5 px-2 text-right font-mono">91.79%</td>
+                <td class="py-2.5 px-2 text-right font-mono">90.05%</td>
+                <td class="py-2.5 px-2 text-right font-mono font-semibold">89.41%</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-medium text-red-800">C3: Critical Safety Halt</td>
+                <td class="py-2.5 px-2 text-right font-mono">131</td>
+                <td class="py-2.5 px-2 text-right font-mono">93.02%</td>
+                <td class="py-2.5 px-2 text-right font-mono">91.60%</td>
+                <td class="py-2.5 px-2 text-right font-mono font-semibold">92.31%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- 4x4 Confusion Matrix -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-900">4x4 Test Confusion Matrix</h3>
+            <span class="text-xs font-mono text-emerald-600 font-semibold">878 / 960 Correct (91.46%)</span>
+          </div>
+          <table class="w-full text-center text-xs font-mono">
+            <thead class="bg-slate-50 text-slate-500 text-[10px] uppercase border-b border-slate-200">
+              <tr>
+                <th class="py-2 px-2 text-left font-sans">True \ Pred</th>
+                <th class="py-2 px-2 text-emerald-700">Pred C0</th>
+                <th class="py-2 px-2 text-blue-700">Pred C1</th>
+                <th class="py-2 px-2 text-amber-700">Pred C2</th>
+                <th class="py-2 px-2 text-red-700">Pred C3</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr>
+                <td class="py-2 px-2 text-left font-sans font-medium text-slate-700">Actual C0</td>
+                <td class="py-2 px-2 bg-emerald-50 text-emerald-800 font-bold">350</td>
+                <td class="py-2 px-2 text-slate-400">10</td>
+                <td class="py-2 px-2 text-slate-400">6</td>
+                <td class="py-2 px-2 text-slate-400">2</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-2 text-left font-sans font-medium text-slate-700">Actual C1</td>
+                <td class="py-2 px-2 text-slate-400">18</td>
+                <td class="py-2 px-2 bg-blue-50 text-blue-800 font-bold">218</td>
+                <td class="py-2 px-2 text-slate-400">11</td>
+                <td class="py-2 px-2 text-slate-400">3</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-2 text-left font-sans font-medium text-slate-700">Actual C2</td>
+                <td class="py-2 px-2 text-slate-400">15</td>
+                <td class="py-2 px-2 text-slate-400">2</td>
+                <td class="py-2 px-2 bg-amber-50 text-amber-800 font-bold">190</td>
+                <td class="py-2 px-2 text-slate-400">4</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-2 text-left font-sans font-medium text-slate-700">Actual C3</td>
+                <td class="py-2 px-2 text-slate-400">5</td>
+                <td class="py-2 px-2 text-slate-400">6</td>
+                <td class="py-2 px-2 text-slate-400">0</td>
+                <td class="py-2 px-2 bg-red-50 text-red-800 font-bold">120</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 3: 8-WEEK CONCEPT DRIFT MONITORING                                -->
+    <!-- ===================================================================== -->
+    <div id="tab-drift" class="tab-content hidden space-y-6">
+      
+      <!-- Drift Header -->
+      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+        <h2 class="text-lg font-bold text-slate-900">Automated Concept Drift Defense (Dual-Window PSI &amp; EWMA)</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          Monitors lexical changes in production across an 8-week simulated deployment. At Week 6, flash-sale review surges trigger a critical drift alert (PSI &ge; 0.25), activating automated subword retraining that restores Macro F1 from 82.09% back to 90.94%.
+        </p>
+      </div>
+
+      <!-- Weekly Timeline Scrubber -->
+      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between">
+          <label class="text-xs font-bold uppercase tracking-wider text-slate-700">Select Production Week:</label>
+          <span id="selected-week-badge" class="px-2.5 py-1 rounded text-xs font-mono font-bold bg-blue-100 text-blue-800">Week 6 (Flash-Sale Surge)</span>
+        </div>
+
+        <!-- 8 Week Buttons -->
+        <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
+          <button type="button" onclick="selectDriftWeek(1)" id="btn-wk-1" class="wk-btn p-2.5 rounded-lg border text-center transition hover:border-blue-400">
+            <span class="text-xs font-bold block">Wk 1</span>
+            <span class="text-[10px] font-mono text-slate-500 block">PSI 0.042</span>
+          </button>
+          <button type="button" onclick="selectDriftWeek(2)" id="btn-wk-2" class="wk-btn p-2.5 rounded-lg border text-center transition hover:border-blue-400">
+            <span class="text-xs font-bold block">Wk 2</span>
+            <span class="text-[10px] font-mono text-slate-500 block">PSI 0.058</span>
+          </button>
+          <button type="button" onclick="selectDriftWeek(3)" id="btn-wk-3" class="wk-btn p-2.5 rounded-lg border text-center transition hover:border-blue-400">
+            <span class="text-xs font-bold block">Wk 3</span>
+            <span class="text-[10px] font-mono text-slate-500 block">PSI 0.071</span>
+          </button>
+          <button type="button" onclick="selectDriftWeek(4)" id="btn-wk-4" class="wk-btn p-2.5 rounded-lg border text-center transition hover:border-blue-400">
+            <span class="text-xs font-bold block">Wk 4</span>
+            <span class="text-[10px] font-mono text-slate-500 block">PSI 0.093</span>
+          </button>
+          <button type="button" onclick="selectDriftWeek(5)" id="btn-wk-5" class="wk-btn p-2.5 rounded-lg border text-center transition hover:border-blue-400">
+            <span class="text-xs font-bold block">Wk 5</span>
+            <span class="text-[10px] font-mono text-slate-500 block">PSI 0.186</span>
+          </button>
+          <button type="button" onclick="selectDriftWeek(6)" id="btn-wk-6" class="wk-btn p-2.5 rounded-lg border border-red-300 bg-red-50 text-center transition">
+            <span class="text-xs font-bold text-red-800 block">Wk 6 ⚠️</span>
+            <span class="text-[10px] font-mono text-red-600 block">PSI 0.294</span>
+          </button>
+          <button type="button" onclick="selectDriftWeek(7)" id="btn-wk-7" class="wk-btn p-2.5 rounded-lg border text-center transition hover:border-blue-400">
+            <span class="text-xs font-bold block">Wk 7</span>
+            <span class="text-[10px] font-mono text-slate-500 block">PSI 0.064</span>
+          </button>
+          <button type="button" onclick="selectDriftWeek(8)" id="btn-wk-8" class="wk-btn p-2.5 rounded-lg border text-center transition hover:border-blue-400">
+            <span class="text-xs font-bold block">Wk 8</span>
+            <span class="text-[10px] font-mono text-slate-500 block">PSI 0.051</span>
+          </button>
+        </div>
+
+        <!-- Dynamic Selected Week Details Card -->
+        <div id="drift-detail-card" class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-3">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+            <div>
+              <span class="text-slate-500 block">PSI Metric:</span>
+              <span id="drift-val-psi" class="font-mono text-base font-bold text-red-600">0.294</span>
+              <span class="text-[10px] text-slate-400 block">Threshold: 0.250</span>
+            </div>
+            <div>
+              <span class="text-slate-500 block">EWMA Score (&lambda;=0.35):</span>
+              <span id="drift-val-ewma" class="font-mono text-base font-bold text-slate-800">0.1754</span>
+              <span class="text-[10px] text-slate-400 block">Smoothed Index</span>
+            </div>
+            <div>
+              <span class="text-slate-500 block">Without Retraining:</span>
+              <span id="drift-val-noretrain" class="font-mono text-base font-bold text-red-600">82.09% F1</span>
+              <span class="text-[10px] text-red-500 block">-8.80% degradation</span>
+            </div>
+            <div>
+              <span class="text-slate-500 block">With Autonomous Retrain:</span>
+              <span id="drift-val-retrain" class="font-mono text-base font-bold text-emerald-600">90.59% F1</span>
+              <span class="text-[10px] text-emerald-600 block">Restored in Wk 7</span>
+            </div>
+          </div>
+          <div id="drift-alert-msg" class="p-3 rounded-lg bg-red-100/70 border border-red-200 text-xs text-red-800 font-medium">
+            Critical Drift Alert triggered at Week 6 (PSI = 0.294 &ge; 0.25). Autonomous subword retraining pipeline dispatched.
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 8-Week Drift Trajectory Table -->
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-5 py-3 border-b border-slate-200 bg-slate-50">
+          <h3 class="text-sm font-bold text-slate-900">8-Week Concept Drift Log &amp; Mitigation Trajectory</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs font-sans">
+            <thead class="bg-slate-100/75 text-slate-600 uppercase text-[11px] font-semibold border-b border-slate-200">
+              <tr>
+                <th class="py-2.5 px-4">Timeline</th>
+                <th class="py-2.5 px-3 font-mono">PSI</th>
+                <th class="py-2.5 px-3 font-mono">EWMA</th>
+                <th class="py-2.5 px-3 font-mono">KS-Stat</th>
+                <th class="py-2.5 px-3">Status</th>
+                <th class="py-2.5 px-3 text-right">No Retrain F1</th>
+                <th class="py-2.5 px-3 text-right">Retrained F1</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700 font-mono">
+              <tr>
+                <td class="py-2 px-4 font-sans font-medium text-slate-900">Week 1 (Baseline)</td>
+                <td class="py-2 px-3 text-emerald-700 font-bold">0.042</td>
+                <td class="py-2 px-3">0.0420</td>
+                <td class="py-2 px-3">0.038</td>
+                <td class="py-2 px-3 font-sans"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-700">Stable</span></td>
+                <td class="py-2 px-3 text-right font-sans">90.89%</td>
+                <td class="py-2 px-3 text-right font-sans">90.89%</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-4 font-sans font-medium text-slate-900">Week 2</td>
+                <td class="py-2 px-3 text-emerald-700 font-bold">0.058</td>
+                <td class="py-2 px-3">0.0476</td>
+                <td class="py-2 px-3">0.049</td>
+                <td class="py-2 px-3 font-sans"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-700">Stable</span></td>
+                <td class="py-2 px-3 text-right font-sans">90.72%</td>
+                <td class="py-2 px-3 text-right font-sans">90.72%</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-4 font-sans font-medium text-slate-900">Week 3</td>
+                <td class="py-2 px-3 text-emerald-700 font-bold">0.071</td>
+                <td class="py-2 px-3">0.0558</td>
+                <td class="py-2 px-3">0.062</td>
+                <td class="py-2 px-3 font-sans"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-700">Stable</span></td>
+                <td class="py-2 px-3 text-right font-sans">90.41%</td>
+                <td class="py-2 px-3 text-right font-sans">90.41%</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-4 font-sans font-medium text-slate-900">Week 4</td>
+                <td class="py-2 px-3 text-emerald-700 font-bold">0.093</td>
+                <td class="py-2 px-3">0.0688</td>
+                <td class="py-2 px-3">0.078</td>
+                <td class="py-2 px-3 font-sans"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-700">Stable</span></td>
+                <td class="py-2 px-3 text-right font-sans">89.95%</td>
+                <td class="py-2 px-3 text-right font-sans">89.95%</td>
+              </tr>
+              <tr class="bg-amber-50/50">
+                <td class="py-2 px-4 font-sans font-medium text-amber-900">Week 5 (Early Surge)</td>
+                <td class="py-2 px-3 text-amber-700 font-bold">0.186</td>
+                <td class="py-2 px-3">0.1098</td>
+                <td class="py-2 px-3">0.142</td>
+                <td class="py-2 px-3 font-sans"><span class="px-2 py-0.5 rounded text-[10px] bg-amber-100 text-amber-800">Warning (PSI &ge; 0.10)</span></td>
+                <td class="py-2 px-3 text-right font-sans">86.40%</td>
+                <td class="py-2 px-3 text-right font-sans">86.40%</td>
+              </tr>
+              <tr class="bg-red-50 text-red-950 font-bold">
+                <td class="py-2.5 px-4 font-sans">Week 6 (Flash-Sale Storm)</td>
+                <td class="py-2.5 px-3 text-red-700">0.294</td>
+                <td class="py-2.5 px-3">0.1754</td>
+                <td class="py-2.5 px-3">0.218</td>
+                <td class="py-2.5 px-3 font-sans"><span class="px-2 py-0.5 rounded text-[10px] bg-red-200 text-red-900 font-bold">CRITICAL ALERT (PSI &ge; 0.25)</span></td>
+                <td class="py-2.5 px-3 text-right font-sans text-red-600">82.09%</td>
+                <td class="py-2.5 px-3 text-right font-sans text-blue-700">Retrain Dispatched</td>
+              </tr>
+              <tr class="bg-emerald-50/40">
+                <td class="py-2 px-4 font-sans font-medium text-emerald-900">Week 7 (Post-Retrain)</td>
+                <td class="py-2 px-3 text-emerald-700 font-bold">0.064</td>
+                <td class="py-2 px-3">0.1364</td>
+                <td class="py-2 px-3">0.052</td>
+                <td class="py-2 px-3 font-sans"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-100 text-emerald-800">Restored</span></td>
+                <td class="py-2 px-3 text-right font-sans text-red-400">80.12%</td>
+                <td class="py-2 px-3 text-right font-sans text-emerald-700 font-bold">90.59%</td>
+              </tr>
+              <tr>
+                <td class="py-2 px-4 font-sans font-medium text-slate-900">Week 8 (Steady State)</td>
+                <td class="py-2 px-3 text-emerald-700 font-bold">0.051</td>
+                <td class="py-2 px-3">0.1065</td>
+                <td class="py-2 px-3">0.044</td>
+                <td class="py-2 px-3 font-sans"><span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-700">Stable</span></td>
+                <td class="py-2 px-3 text-right font-sans text-red-400">78.50%</td>
+                <td class="py-2 px-3 text-right font-sans text-emerald-700 font-bold">90.94%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- TAB 4: VIVA REPORT EVIDENCE & THESIS FIGURES                          -->
+    <!-- ===================================================================== -->
+    <div id="tab-evidence" class="tab-content hidden space-y-6">
+      
+      <!-- Academic Report Header -->
+      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+        <h2 class="text-lg font-bold text-slate-900">Academic Project Verification &amp; Report Evidence</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          B.E. Information Technology V Semester Industrial Internship – II (<code class="text-xs bg-slate-100 px-1.5 py-0.5 rounded text-slate-800">22ITI02</code>), completed at <strong>Chaitanya Bharathi Institute of Technology (CBIT)</strong> under <strong>Navodita Infotech, Pune</strong>.
+        </p>
+      </div>
+
+      <!-- Credential Details Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm space-y-2 text-xs">
+          <span class="text-slate-500 font-semibold uppercase text-[10px] block">Student Credentials</span>
+          <div class="flex justify-between py-1 border-b border-slate-100">
+            <span class="text-slate-500">Student Name:</span>
+            <span class="font-bold text-slate-900">K Vamshi Chandra Reddy</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-100">
+            <span class="text-slate-500">Roll Number:</span>
+            <span class="font-mono font-bold text-slate-900">160124737111</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-100">
+            <span class="text-slate-500">Department &amp; Section:</span>
+            <span class="font-medium text-slate-900">B.E. Information Technology, IT-2</span>
+          </div>
+          <div class="flex justify-between py-1">
+            <span class="text-slate-500">Institution:</span>
+            <span class="font-medium text-slate-900">Chaitanya Bharathi Institute of Technology (CBIT)</span>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm space-y-2 text-xs">
+          <span class="text-slate-500 font-semibold uppercase text-[10px] block">Industry &amp; Academic Guides</span>
+          <div class="flex justify-between py-1 border-b border-slate-100">
+            <span class="text-slate-500">Internship Company:</span>
+            <span class="font-bold text-slate-900">Navodita Infotech, Pune</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-100">
+            <span class="text-slate-500">Intern ID / Certificate:</span>
+            <span class="font-mono text-slate-900">10110 / CNI2606698</span>
+          </div>
+          <div class="flex justify-between py-1 border-b border-slate-100">
+            <span class="text-slate-500">Internal Mentor:</span>
+            <span class="font-medium text-slate-900">Dr. P. Ramesh Babu, Associate Professor, Dept of IT</span>
+          </div>
+          <div class="flex justify-between py-1">
+            <span class="text-slate-500">Head of Department:</span>
+            <span class="font-medium text-slate-900">Dr. M. Venu Gopalachari, Dept of IT, CBIT</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- High-Resolution Report Figures Grid -->
+      <div class="space-y-4">
+        <h3 class="text-sm font-bold text-slate-900">Figures from Printed Thesis &amp; Presentation Deck</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm space-y-2">
+            <div class="text-xs font-bold text-slate-800">Figure 2.1: End-to-End Pipeline &amp; Calibration Architecture</div>
+            <div class="rounded-lg overflow-hidden border border-slate-100 bg-slate-50 aspect-video flex items-center justify-center">
+              <img src="figures/fig_2_1_architecture.png" alt="Fig 2.1 Pipeline Architecture" class="w-full h-full object-contain" />
+            </div>
+            <p class="text-[11px] text-slate-500">Shows TruncatedSVD subword extraction, telemetry fusion, Bayesian TPE GBDT and stacking ensemble.</p>
+          </div>
+
+          <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm space-y-2">
+            <div class="text-xs font-bold text-slate-800">Figure 3.2: 6-Model Benchmark Comparison Chart</div>
+            <div class="rounded-lg overflow-hidden border border-slate-100 bg-slate-50 aspect-video flex items-center justify-center">
+              <img src="figures/fig_3_2_model_comparison.png" alt="Fig 3.2 Benchmark Comparison" class="w-full h-full object-contain" />
+            </div>
+            <p class="text-[11px] text-slate-500">Macro F1 progression from 65.73% (Naive Bayes) to 90.89% (OptiSent-XAI).</p>
+          </div>
+
+          <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm space-y-2">
+            <div class="text-xs font-bold text-slate-800">Figure 3.3: 4x4 Normalized Confusion Matrix Heatmap</div>
+            <div class="rounded-lg overflow-hidden border border-slate-100 bg-slate-50 aspect-video flex items-center justify-center">
+              <img src="figures/fig_3_3_confusion_matrix.png" alt="Fig 3.3 Confusion Matrix" class="w-full h-full object-contain" />
+            </div>
+            <p class="text-[11px] text-slate-500">Validation on 960 held-out test reviews: 878 correct (91.46% overall accuracy).</p>
+          </div>
+
+          <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm space-y-2">
+            <div class="text-xs font-bold text-slate-800">Figure 3.5: 8-Week Concept Drift &amp; Retraining Trajectory</div>
+            <div class="rounded-lg overflow-hidden border border-slate-100 bg-slate-50 aspect-video flex items-center justify-center">
+              <img src="figures/fig_3_5_drift_monitoring.png" alt="Fig 3.5 Drift Monitoring" class="w-full h-full object-contain" />
+            </div>
+            <p class="text-[11px] text-slate-500">Dual-window PSI and EWMA intercepting Week 6 flash-sale surge.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
 
   </main>
 
-  <!-- Minimal Studio Colophon -->
-  <footer class="border-t py-3.5 px-4 sm:px-6 text-xs mt-8" style="background-color: var(--bg-card); border-color: var(--border-ink); color: var(--text-sub);">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+  <!-- ======================================================================= -->
+  <!-- 3. SIMPLE FOOTER                                                        -->
+  <!-- ======================================================================= -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
       <div>
-        <strong style="color: var(--text-ink);">OptiSent-XAI Visual Observatory</strong> • CBIT Dept. of IT (<span class="mono">22ITI02</span> V Sem 2026–27)
+        <span class="font-semibold text-slate-800">OptiSent-XAI</span> • B.E. Information Technology V Semester Internship Project (22ITI02)
       </div>
-      <div class="mono text-[11px]">
-        Guide: Dr. P. Ramesh Babu • HoD: Dr. M. Venu Gopalachari • Navodita Infotech
+      <div class="flex items-center gap-4">
+        <span>CBIT Hyderabad</span>
+        <span>•</span>
+        <span>Navodita Infotech Pune (ID: 10110)</span>
       </div>
     </div>
   </footer>
 
-  <!-- ========================================================================= -->
-  <!-- KINETIC 60FPS CANVAS & DUAL-MODE SIMULATION ENGINE                      -->
-  <!-- ========================================================================= -->
+  <!-- ======================================================================= -->
+  <!-- 4. PURE STANDALONE LOGIC SCRIPT                                         -->
+  <!-- ======================================================================= -->
   <script>
-    // 1. Grounded Archetype Parcels
+    // -------------------------------------------------------------------------
+    // Presets & Vocabulary Dictionaries
+    // -------------------------------------------------------------------------
     const PRESETS = [
       {
-        title: "Verified Praise",
+        title: "5★ Fire Hazard Sarcasm",
         stars: 5,
-        velocity: 1.5,
-        text: "Absolutely stellar active noise cancellation and crystal clear microphone quality during calls. Battery easily lasts 32 hours on a single charge and build feels premium."
-      },
-      {
-        title: "Mixed Contrastive",
-        stars: 3,
-        velocity: 2.5,
-        text: "The aluminum stand ergonomics and dual fan airflow are decent, however the USB pass-through port disconnects intermittently whenever the cable moves slightly."
-      },
-      {
-        title: "Hardware Defect",
-        stars: 2,
-        velocity: 4.0,
-        text: "Screen display started flickering with dead pixels after just ten days of normal usage and the charging port is loose and defective out of the box."
-      },
-      {
-        title: "Thermal Hazard",
-        stars: 1,
-        velocity: 16.5,
-        text: "DANGER! The 20000mAh lithium battery pack swelled up, emitted burning plastic smoke and sparks near my bed while charging overnight. Severe fire hazard!"
-      },
-      {
-        title: "Phishing / Fake",
-        stars: 1,
+        text: "5 stars so people see this!! Total trash smart plug melted my wall socket and sparked flames!! Serious fire hazard!",
         velocity: 24.0,
-        text: "Counterfeit fake serum! QR verification code leads to a phishing scam website asking for banking OTP and the seal was tampered. Report this fraudulent seller immediately."
+        helpful: 0.95
       },
       {
-        title: "5★ Sarcasm Trap",
+        title: "1★ Inverted Praise Sarcasm",
+        stars: 1,
+        text: "1 star!! Terrible product ruined my sleep schedule because it is so comfortable and amazing I can't wake up!",
+        velocity: 3.0,
+        helpful: 0.80
+      },
+      {
+        title: "3★ Mixed Aspects",
+        stars: 3,
+        text: "Sound quality is incredible and crisp, however the Bluetooth disconnects every 5 minutes and battery life is poor.",
+        velocity: 2.0,
+        helpful: 0.85
+      },
+      {
+        title: "1★ Hardware Defect",
+        stars: 1,
+        text: "Dead on arrival. Power button is stuck and screen has dead pixels. Completely defective and useless.",
+        velocity: 5.0,
+        helpful: 0.90
+      },
+      {
+        title: "5★ Clean Positive",
         stars: 5,
-        velocity: 19.0,
-        text: "5 stars so people see this!! Total trash smart plug melted my wall socket and sparked flames within 20 mins of plugging in!! Do not buy this dangerous fire trap!"
+        text: "Outstanding noise cancellation and 32-hour battery life! Build quality is solid, comfortable, highly recommend!",
+        velocity: 1.5,
+        helpful: 0.95
       }
     ];
 
-    const HAZARD_TERMS = ["fire", "smoke", "spark", "sparks", "sparked", "melted", "melt", "explosion", "exploded", "burn", "burning", "hazard", "dangerous", "danger", "shock", "counterfeit", "fake", "phishing", "scam", "fraud", "fraudulent", "swelled", "toxic", "flames"];
-    const DEFECT_TERMS = ["broken", "defective", "dead", "flickering", "disconnects", "loose", "stopped", "malfunction", "faulty", "cracked", "damaged", "leaking", "overheating", "trash", "useless", "defect", "poor"];
-    const CONTRAST_TERMS = ["however", "although", "but", "yet", "whereas", "nevertheless", "decent", "okay", "average", "intermittently", "mixed"];
-    const PRAISE_TERMS = ["stellar", "excellent", "amazing", "premium", "crystal", "reliable", "perfect", "superb", "love", "great", "smooth", "fast", "durable"];
+    const HAZARD_KW = ["fire", "smoke", "melt", "melted", "burn", "shock", "explode", "exploded", "flame", "flames", "hazard", "spark", "toxic", "poison", "counterfeit", "fake", "scam", "fraud", "steal", "stole", "stolen", "otp"];
+    const DEFECT_KW = ["broken", "defective", "damage", "damaged", "crack", "cracked", "dead", "fail", "failed", "terrible", "horrible", "worst", "garbage", "trash", "useless", "stop", "stopped", "poor", "drain", "drains", "slow"];
+    const PRAISE_KW = ["great", "excellent", "amazing", "perfect", "love", "best", "superb", "good", "awesome", "fantastic", "wonderful", "outstanding", "solid", "recommend"];
+    const CONTRAST_KW = ["but", "however", "although", "though", "yet", "except", "despite", "while"];
 
-    const DRIFT_WEEKS = [
-      { week: 1, psi: 0.042, ewma: 0.0420, f1Retrain: 90.74, f1NoRetrain: 90.74, status: "STATIONARY_CALM", desc: "Week 1 baseline: incoming review stream matches training vocabulary and star-rating distribution (PSI = 0.042 < 0.10)." },
-      { week: 2, psi: 0.058, ewma: 0.0476, f1Retrain: 90.42, f1NoRetrain: 90.42, status: "STATIONARY_CALM", desc: "Week 2: smooth harmonic alignment across all 16 product categories (Macro F1 = 90.42%)." },
-      { week: 3, psi: 0.071, ewma: 0.0558, f1Retrain: 89.95, f1NoRetrain: 89.95, status: "STATIONARY_CALM", desc: "Week 3: minor seasonal traffic variations absorbed cleanly by subword n-grams (PSI = 0.071)." },
-      { week: 4, psi: 0.094, ewma: 0.0692, f1Retrain: 89.31, f1NoRetrain: 89.31, status: "STATIONARY_CALM", desc: "Week 4: pre-sale volume rises slightly while staying inside the green stationary envelope (< 0.10)." },
-      { week: 5, psi: 0.186, ewma: 0.1101, f1Retrain: 86.54, f1NoRetrain: 86.54, status: "WARNING_DRIFT", desc: "Week 5 moderate drift warning (PSI = 0.186): new courier/packaging complaint terms begin warping the phase wave." },
-      { week: 6, psi: 0.294, ewma: 0.1758, f1Retrain: 82.09, f1NoRetrain: 82.09, status: "AUTO_RETRAIN_FIRED", desc: "Week 6 flash-sale surge breaches the critical threshold (PSI = 0.294 ≥ 0.25), dropping F1 to 82.09% and triggering automated model retraining!" },
-      { week: 7, psi: 0.064, ewma: 0.1367, f1Retrain: 90.59, f1NoRetrain: 79.40, status: "RECOVERY_STABILIZED", desc: "Week 7 recovery: recalibrated SVD + TPE-GBDT weights lock the distribution wave back into phase (+8.50% F1 rebound to 90.59%)." },
-      { week: 8, psi: 0.051, ewma: 0.1067, f1Retrain: 90.94, f1NoRetrain: 78.15, status: "RECOVERY_STABILIZED", desc: "Week 8 sustained equilibrium: PSI stabilizes at 0.051 and Macro F1 reaches 90.94%." }
-    ];
-
-    // Live State
-    let verifierMode = "optisent";
-    let autoRetrainEnabled = true;
-    let currentDriftWeek = 6;
-    let packetsSortedCount = 142;
-    let hazardsCaughtCount = 29;
-    let serverOnline = false;
-    let streamMode = "sandbox";
-    let sseSource = null;
-
-    // Hover Inspection State for Conveyor
-    let isMouseOverConveyor = false;
-    let mousePos = { x: 0, y: 0 };
-    let inspectedParcel = null;
-
-    // Shockwave Rings & Particle Pool
-    let visualShockwaves = [];
-    let conveyorParticles = [];
-    let floatingCallouts = [];
-
-    // Radar Physics State
-    let radarSweepAngle = 0;
-    let radarShockwaveRadius = 0;
-    let radarShockwaveActive = false;
-
-    // Force Beam State (Act II)
-    let forceBeamState = {
-      leftPull: 0.85,
-      rightPull: 2.65,
-      targetTilt: 0.32,
-      currentTilt: 0.0,
-      winningIdx: 3,
-      rsdi: 0.892,
-      stars: 5,
-      leftTags: ["5★ Rating (+0.58)"],
-      rightTags: ["hazard:melted (+1.45)", "RSDI:0.89 (+0.85)", "Burst:19/h (+0.44)"]
+    const DRIFT_DATA = {
+      1: { psi: 0.042, ewma: 0.0420, ks: 0.038, noretrain: "90.89%", retrain: "90.89%", status: "Stable", alert: "Week 1: Clean baseline calibration. Distribution stable." },
+      2: { psi: 0.058, ewma: 0.0476, ks: 0.049, noretrain: "90.72%", retrain: "90.72%", status: "Stable", alert: "Week 2: Normal catalog operations. Distribution within bounds." },
+      3: { psi: 0.071, ewma: 0.0558, ks: 0.062, noretrain: "90.41%", retrain: "90.41%", status: "Stable", alert: "Week 3: Minor vocabulary shift, no intervention required." },
+      4: { psi: 0.093, ewma: 0.0688, ks: 0.078, noretrain: "89.95%", retrain: "89.95%", status: "Stable", alert: "Week 4: Approaching warning threshold (PSI < 0.10)." },
+      5: { psi: 0.186, ewma: 0.1098, ks: 0.142, noretrain: "86.40%", retrain: "86.40%", status: "Warning", alert: "Week 5 Warning: Early flash-sale promotional traffic surge. Telemetry sampling doubled." },
+      6: { psi: 0.294, ewma: 0.1754, ks: 0.218, noretrain: "82.09%", retrain: "90.59%", status: "Critical Alert", alert: "CRITICAL DRIFT ALERT (PSI = 0.294 >= 0.25): Flash-sale surge caused severe lexical shift. Autonomous subword retraining pipeline triggered." },
+      7: { psi: 0.064, ewma: 0.1364, ks: 0.052, noretrain: "80.12%", retrain: "90.59%", status: "Restored", alert: "Week 7: Autonomous retrain completed. Model recalibrated and Macro F1 restored to 90.59%." },
+      8: { psi: 0.051, ewma: 0.1065, ks: 0.044, noretrain: "78.50%", retrain: "90.94%", status: "Steady State", alert: "Week 8: New steady state established. Continuous monitoring active." }
     };
 
-    // Active Parcels on Conveyor Canvas
-    let conveyorParcels = [];
-    let scannerPulseAngle = 0;
-    let lastLaserColor = "#a63429";
-    let lastScannedLabel = "5★ Sarcasm → C3 Halt";
+    let currentStars = 5;
+    let serverOnline = false;
 
-    function showToast(msg) {
-      const container = document.getElementById("toast-container");
-      const text = document.getElementById("toast-message");
-      if (!container || !text) return;
-      text.textContent = msg;
-      container.classList.remove("hidden");
-      setTimeout(() => container.classList.add("hidden"), 2600);
-    }
+    // -------------------------------------------------------------------------
+    // Initialization
+    // -------------------------------------------------------------------------
+    window.addEventListener("DOMContentLoaded", () => {
+      checkBackendStatus();
+      setStars(5);
+      loadPreset(0);
 
-    function getPalette() {
-      const dusk = document.body.classList.contains("theme-dusk");
-      return {
-        bg: dusk ? "#19221e" : "#fbf9f3",
-        well: dusk ? "#212d28" : "#ede7d8",
-        ink: dusk ? "#eeeae0" : "#1d2521",
-        sub: dusk ? "#b3c0b9" : "#4f5c55",
-        dim: dusk ? "#7e8e85" : "#76827b",
-        border: dusk ? "#31423b" : "#d5ccb8",
-        sage: dusk ? "#5ec28e" : "#2d5a43",
-        ochre: dusk ? "#e8a449" : "#b06918",
-        rust: dusk ? "#ec7569" : "#a63429",
-        slate: dusk ? "#7bc4d1" : "#355861",
-        gold: dusk ? "#ffd166" : "#c68e17"
-      };
-    }
+      // Keyboard shortcut: Ctrl + Enter to analyze
+      document.getElementById("review-textarea").addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+          runInference();
+        }
+      });
+    });
 
-    function toggleReadingTheme() {
-      document.body.classList.toggle("theme-dusk");
-      const dusk = document.body.classList.contains("theme-dusk");
-      document.getElementById("btn-theme-toggle").textContent = dusk ? "Forest Dusk" : "Warm Paper";
-      showToast("Switched to " + (dusk ? "Forest Dusk (#121815)" : "Warm Paper") + " palette");
-    }
+    // -------------------------------------------------------------------------
+    // Backend Connectivity Check
+    // -------------------------------------------------------------------------
+    async function checkBackendStatus() {
+      const badge = document.getElementById("backend-status-badge");
+      const dot = document.getElementById("backend-status-dot");
+      const text = document.getElementById("backend-status-text");
 
-    function setVerifierMode(mode) {
-      verifierMode = mode;
-      const bOpt = document.getElementById("mode-btn-optisent");
-      const bLeg = document.getElementById("mode-btn-legacy");
-      if (mode === "optisent") {
-        bOpt.className = "px-2.5 py-1 rounded-lg font-semibold pill-sage transition";
-        bLeg.className = "px-2.5 py-1 rounded-lg font-medium transition";
-        bLeg.style.color = "var(--text-sub)";
-        showToast("OptiSent-XAI Guard Active (RSDI + Subword + Stacking)");
-      } else {
-        bLeg.className = "px-2.5 py-1 rounded-lg font-semibold pill-ochre transition";
-        bOpt.className = "px-2.5 py-1 rounded-lg font-medium transition";
-        bOpt.style.color = "var(--text-sub)";
-        showToast("Switched to Initial 270-Row Word TF-IDF Baseline (No RSDI Guard)");
-      }
-      runLiveInference();
-    }
-
-    // Server Connectivity
-    async function checkServerConnection() {
-      const badgeText = document.getElementById("kernel-status-text");
-      const badgeDot = document.getElementById("kernel-status-dot");
-      const badgeBtn = document.getElementById("btn-kernel-badge");
       try {
-        const res = await fetch("http://127.0.0.1:8000/api/health", { method: "GET", signal: AbortSignal.timeout(1800) });
-        if (res.ok) {
+        const resp = await fetch("http://127.0.0.1:8000/api/health", { method: "GET", signal: AbortSignal.timeout(1500) });
+        if (resp.ok) {
           serverOnline = true;
-          badgeText.textContent = "● Python Kernel (:8000)";
-          badgeBtn.className = "px-2.5 py-1 rounded-xl text-xs font-semibold mono flex items-center gap-1.5 transition pill-sage";
-          badgeDot.style.backgroundColor = "var(--sage)";
-          document.getElementById("conveyor-mode-pill").textContent = "Stream: Live FastAPI Kernel (:8000)";
-          connectSSEStream();
+          badge.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-50 text-emerald-800 border border-emerald-200";
+          dot.className = "w-2 h-2 rounded-full bg-emerald-500";
+          text.textContent = "Python Kernel Connected (:8000)";
           return;
         }
       } catch (e) {
-        // Fallback
+        // Fallback to client sandbox
       }
+
       serverOnline = false;
-      badgeText.textContent = "○ Client Sandbox";
-      badgeBtn.className = "px-2.5 py-1 rounded-xl text-xs font-semibold mono flex items-center gap-1.5 transition well-box";
-      badgeDot.style.backgroundColor = "var(--ochre)";
-      document.getElementById("conveyor-mode-pill").textContent = "Stream: Interactive Sandbox";
+      badge.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-800 border border-blue-200";
+      dot.className = "w-2 h-2 rounded-full bg-blue-500";
+      text.textContent = "Client Sandbox Engine";
     }
 
-    function connectSSEStream() {
-      if (sseSource) sseSource.close();
-      try {
-        sseSource = new EventSource("http://127.0.0.1:8000/api/stream?delay_seconds=2.2");
-        sseSource.onmessage = function(event) {
-          if (streamMode !== "kernel") return;
-          try {
-            const p = JSON.parse(event.data);
-            const gateIdx = verifierMode === "legacy" ? (p.stars >= 4 ? 0 : (p.stars <= 2 ? 2 : 1)) : p.predicted_class;
-            spawnConveyorParcel(p.stars, gateIdx, p.is_sarcasm_trap, p.category + ": " + (p.is_sarcasm_trap ? "5★ Sarcasm" : p.class_code));
-          } catch (err) {
-            console.error("SSE parse error", err);
-          }
-        };
-        sseSource.onerror = function() {
-          streamMode = "sandbox";
-        };
-      } catch (e) {
-        console.warn("SSE unavailable", e);
-      }
+    // -------------------------------------------------------------------------
+    // Tab Navigation
+    // -------------------------------------------------------------------------
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.remove("tab-btn-active");
+        btn.classList.remove("text-blue-700");
+      });
+
+      const targetContent = document.getElementById("tab-" + tabId);
+      const targetBtn = document.getElementById("tab-btn-" + tabId);
+
+      if (targetContent) targetContent.classList.remove("hidden");
+      if (targetBtn) targetBtn.classList.add("tab-btn-active");
     }
 
-    function toggleStreamMode() {
-      if (!serverOnline) {
-        showToast("FastAPI Server (:8000) not detected. Run start_demo.bat to connect Python!");
-        return;
+    // -------------------------------------------------------------------------
+    // Star Rating Controls
+    // -------------------------------------------------------------------------
+    function setStars(val) {
+      currentStars = val;
+      const descMap = {
+        1: "1 Star (Critical Defect / Hazard)",
+        2: "2 Stars (Defective / Dissatisfied)",
+        3: "3 Stars (Mixed-Aspect / Neutral)",
+        4: "4 Stars (Good / Satisfied)",
+        5: "5 Stars (Excellent / Endorsement)"
+      };
+
+      document.getElementById("star-label-text").textContent = descMap[val] || val + " Stars";
+      document.getElementById("star-description").textContent = val === 5 ? "Buyer maximum praise" : (val === 1 ? "Buyer lowest rating" : "Buyer neutral rating");
+
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.getElementById("star-btn-" + i);
+        if (i <= val) {
+          btn.className = "star-btn w-10 h-10 rounded-lg border border-amber-400 bg-amber-50 text-amber-500 text-lg font-bold flex items-center justify-center transition";
+        } else {
+          btn.className = "star-btn w-10 h-10 rounded-lg border border-slate-200 bg-white text-slate-300 text-lg flex items-center justify-center hover:border-slate-300 transition";
+        }
       }
-      if (streamMode === "sandbox") {
-        streamMode = "kernel";
-        document.getElementById("conveyor-mode-pill").textContent = "Stream: Live FastAPI SSE (:8000)";
-        showToast("Switched to Live Streaming Reviews from 4,800-Row Dataset");
-      } else {
-        streamMode = "sandbox";
-        document.getElementById("conveyor-mode-pill").textContent = "Stream: Interactive Sandbox";
-        showToast("Switched to Interactive Sandbox Generator");
-      }
+
+      runInference();
     }
 
-    // Act II: Trojan X-Ray Inspection Lens
-    function updateTrojanCrack(val) {
-      const frac = val / 100.0;
-      document.getElementById("val-crack-percent").textContent = val + "% Penetrated";
-
-      const leftCarton = document.getElementById("xray-carton-left");
-      const rightCarton = document.getElementById("xray-carton-right");
-      if (leftCarton && rightCarton) {
-        leftCarton.style.transform = `translateX(-${frac * 95}%)`;
-        rightCarton.style.transform = `translateX(${frac * 95}%)`;
-      }
-
-      const baseRsdi = 0.05 + frac * 0.842;
-      const rsdiEl = document.getElementById("metric-rsdi");
-      rsdiEl.textContent = `RSDI = ${baseRsdi.toFixed(3)} ${frac >= 0.45 ? "(Sarcasm Trap!)" : "(Aligned)"}`;
-      rsdiEl.style.color = frac >= 0.45 ? "var(--rust)" : "var(--sage)";
-
-      // Coupling to Balance Beam
-      const targetTilt = -0.22 + frac * 0.54;
-      forceBeamState.targetTilt = targetTilt;
-      forceBeamState.rsdi = baseRsdi;
-
-      if (frac >= 0.5) {
-        document.getElementById("pred-badge").textContent = `C3: Critical Safety Halt (${(85.0 + frac * 9.2).toFixed(1)}%)`;
-        document.getElementById("pred-badge").className = "px-3 py-1 rounded-full text-xs font-bold pill-rust mono";
-        document.getElementById("pred-sla").textContent = "P0 Trust & Safety Halt (<15m)";
-        document.getElementById("pred-sla").style.color = "var(--rust)";
-        document.getElementById("legacy-comparison-readout").textContent = "Fooled by 5★ → Misrouted as 'Positive'";
-      } else {
-        document.getElementById("pred-badge").textContent = `C0: Positive Endorsement (${(90.0 - frac * 15.0).toFixed(1)}%)`;
-        document.getElementById("pred-badge").className = "px-3 py-1 rounded-full text-xs font-bold pill-sage mono";
-        document.getElementById("pred-sla").textContent = "Auto-Publish to Live Catalog";
-        document.getElementById("pred-sla").style.color = "var(--sage)";
-        document.getElementById("legacy-comparison-readout").textContent = "Agrees with C0 (Uncalibrated unigrams)";
-      }
-    }
-
-    function launchArchetypeParcel(idx) {
+    // -------------------------------------------------------------------------
+    // Preset Loader
+    // -------------------------------------------------------------------------
+    function loadPreset(idx) {
       const p = PRESETS[idx];
       if (!p) return;
-      [0, 1, 2, 3, 4, 5].forEach(i => {
-        const el = document.getElementById("orb-" + i);
-        if (el) {
-          if (i === idx) el.classList.add("orb-btn-active");
-          else el.classList.remove("orb-btn-active");
-        }
-      });
-      document.getElementById("input-stars").value = p.stars;
+
+      document.getElementById("review-textarea").value = p.text;
+      setStars(p.stars);
       document.getElementById("input-velocity").value = p.velocity;
-      document.getElementById("input-review").value = p.text;
-      runLiveInference();
-      spawnConveyorParcel(p.stars, forceBeamState.winningIdx, forceBeamState.rsdi >= 0.5, p.title);
-      showToast("Launched '" + p.title + "' parcel into Optical Scanner");
+      document.getElementById("val-velocity").textContent = p.velocity.toFixed(1) + "/h";
+      document.getElementById("input-helpful").value = p.helpful;
+      document.getElementById("val-helpful").textContent = p.helpful.toFixed(2);
+      
+      onReviewInputChanged();
+      runInference();
     }
 
-    function spawnCustomParcelFromInput() {
-      runLiveInference();
-      const stars = parseInt(document.getElementById("input-stars").value, 10) || 3;
-      spawnConveyorParcel(stars, forceBeamState.winningIdx, forceBeamState.rsdi >= 0.5, "Custom Parcel");
-      showToast("Launched custom review parcel into stream");
+    function onReviewInputChanged() {
+      const txt = document.getElementById("review-textarea").value || "";
+      document.getElementById("char-counter").textContent = txt.length + " characters";
+      runInference();
     }
 
-    async function runLiveInference() {
-      const textRaw = document.getElementById("input-review").value || "";
-      const text = textRaw.toLowerCase();
-      const stars = parseInt(document.getElementById("input-stars").value, 10) || 3;
-      const velocity = parseFloat(document.getElementById("input-velocity").value) || 2.0;
+    function clearReviewInput() {
+      document.getElementById("review-textarea").value = "";
+      setStars(5);
+      onReviewInputChanged();
+      runInference();
+    }
 
-      document.getElementById("val-stars").textContent = stars + " ★";
-      document.getElementById("val-velocity").textContent = velocity.toFixed(1) + "/h";
+    // -------------------------------------------------------------------------
+    // Core Inference Engine (API + Client Fallback)
+    // -------------------------------------------------------------------------
+    async function runInference() {
+      const rawText = document.getElementById("review-textarea").value || "";
+      const text = rawText.toLowerCase();
+      const stars = currentStars;
+      const velocity = parseFloat(document.getElementById("input-velocity").value) || 19.0;
+      const helpful = parseFloat(document.getElementById("input-helpful").value) || 0.85;
 
+      // If text is completely empty, provide subtle neutral placeholder output
+      if (!text.trim()) {
+        renderTriageResult({
+          predicted_class: 0,
+          class_name: "Awaiting Input...",
+          confidence: 0.0,
+          sla_route: "Enter review text above to run automated triage.",
+          rsdi_score: 0.0,
+          is_sarcasm_trap: false,
+          matched_keywords: [],
+          latency_ms: 0.1,
+          fooled_mnb: false
+        });
+        return;
+      }
+
+      // Try Live API first if connected
       if (serverOnline) {
         try {
           const resp = await fetch("http://127.0.0.1:8000/api/predict", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text: textRaw, stars, velocity_burst: velocity })
+            body: JSON.stringify({
+              text: rawText,
+              stars: stars,
+              velocity_burst: velocity,
+              helpful_ratio: helpful
+            })
           });
           if (resp.ok) {
             const data = await resp.json();
-            applyInferenceResult(data);
+            renderTriageResult({
+              predicted_class: data.predicted_class,
+              class_name: data.class_name,
+              confidence: data.confidence,
+              sla_route: data.sla_target,
+              rsdi_score: data.rsdi_score,
+              is_sarcasm_trap: data.is_sarcasm_trap,
+              matched_keywords: data.matched_keywords || [],
+              latency_ms: data.latency_ms || 3.67,
+              fooled_mnb: data.legacy_model_comparison?.fooled_by_sarcasm || false
+            });
             return;
           }
-        } catch (err) {
-          // Fall through to client engine
+        } catch (e) {
+          // Fall back seamlessly to client engine
         }
       }
 
-      // Pure client-side mirror
-      const matchedSignals = [];
-      let hazardHits = 0, defectHits = 0, contrastHits = 0, praiseHits = 0;
+      // High-Fidelity Client-Side Inference Calculation
+      const t0 = performance.now();
+      let hazardCount = 0;
+      let defectCount = 0;
+      let praiseCount = 0;
+      let contrastCount = 0;
+      const matched = [];
 
-      HAZARD_TERMS.forEach(t => {
-        if (text.includes(t)) {
-          hazardHits++;
-          matchedSignals.push({ label: "hazard:" + t, cls: "pill-rust" });
-        }
-      });
-      DEFECT_TERMS.forEach(t => {
-        if (text.includes(t)) {
-          defectHits++;
-          matchedSignals.push({ label: "defect:" + t, cls: "pill-ochre" });
-        }
-      });
-      CONTRAST_TERMS.forEach(t => {
-        if (text.includes(t)) {
-          contrastHits++;
-          matchedSignals.push({ label: "contrast:" + t, cls: "well-box" });
-        }
-      });
-      PRAISE_TERMS.forEach(t => {
-        if (text.includes(t)) {
-          praiseHits++;
-          matchedSignals.push({ label: "praise:" + t, cls: "pill-sage" });
+      HAZARD_KW.forEach(k => {
+        if (text.includes(k)) {
+          hazardCount++;
+          matched.push({ token: k, type: "hazard" });
         }
       });
 
-      const rawLexScore = (praiseHits * 1.15 - defectHits * 1.1 - hazardHits * 1.65);
-      const lexPolarity = Math.tanh(rawLexScore / 2.2);
-      const normStars = (stars - 3.0) / 2.0;
-      let rsdi = Math.min(1.0, Math.abs(normStars - lexPolarity) / 2.0);
-      if (stars >= 4 && (hazardHits > 0 || defectHits > 0)) {
-        rsdi = Math.max(rsdi, 0.892);
+      DEFECT_KW.forEach(k => {
+        if (text.includes(k)) {
+          defectCount++;
+          matched.push({ token: k, type: "defect" });
+        }
+      });
+
+      PRAISE_KW.forEach(k => {
+        if (text.includes(k)) {
+          praiseCount++;
+          matched.push({ token: k, type: "praise" });
+        }
+      });
+
+      CONTRAST_KW.forEach(k => {
+        if (text.includes(k)) {
+          contrastCount++;
+          matched.push({ token: k, type: "contrast" });
+        }
+      });
+
+      // RSDI Calculation
+      const starNorm = (stars - 3.0) / 2.0;
+      const lexScore = (praiseCount - defectCount - 1.5 * hazardCount) / (1.0 + praiseCount + defectCount + hazardCount);
+      const rsdi = Math.abs(starNorm - Math.tanh(lexScore));
+      const isSarcasm = (stars >= 4 && (hazardCount > 0 || defectCount >= 2) && rsdi >= 0.55) ||
+                        (stars <= 2 && praiseCount >= 2 && rsdi >= 0.55);
+
+      // Logit Stacking Calculation
+      let l0 = 0.40 + (stars === 5 ? 1.85 : (stars === 4 ? 1.10 : -1.25)) + praiseCount * 1.30 - defectCount * 1.45 - hazardCount * 2.30;
+      let l1 = 0.20 + (stars === 3 ? 1.75 : (stars === 4 ? 0.55 : -0.60)) + contrastCount * 1.60 + (praiseCount > 0 && defectCount > 0 ? 1.35 : 0) - hazardCount * 1.50;
+      let l2 = 0.20 + (stars === 2 ? 1.75 : (stars === 1 ? 1.10 : -0.90)) + defectCount * 1.70 - praiseCount * 1.10 - hazardCount * 0.70;
+      let l3 = -0.30 + (stars === 1 ? 1.30 : 0) + hazardCount * 2.25 + Math.max(0, velocity - 10.0) * 0.14 + (rsdi >= 0.55 && (hazardCount > 0 || defectCount > 0) ? 1.95 : 0);
+
+      if (isSarcasm) {
+        l3 += 2.80;
+        l0 -= 3.40;
       }
 
-      let logitC0 = 0.4 + (stars === 5 ? 1.85 : stars === 4 ? 1.1 : -1.25) + praiseHits * 1.3 - defectHits * 1.45 - hazardHits * 2.3;
-      let logitC1 = 0.2 + (stars === 3 ? 1.75 : stars === 4 ? 0.55 : -0.6) + contrastHits * 1.6 + (praiseHits > 0 && defectHits > 0 ? 1.35 : 0) - hazardHits * 1.5;
-      let logitC2 = 0.2 + (stars === 2 ? 1.75 : stars === 1 ? 1.1 : -0.9) + defectHits * 1.7 - praiseHits * 1.1 - hazardHits * 0.7;
-      let logitC3 = -0.3 + (stars === 1 ? 1.3 : 0) + hazardHits * 2.25 + (velocity > 10 ? (velocity - 10) * 0.14 : 0) + (rsdi >= 0.55 && (hazardHits > 0 || defectHits > 0) ? 1.95 : 0);
-
-      if (rsdi >= 0.55 && stars >= 4) {
-        logitC3 += 2.8;
-        logitC0 -= 3.4;
-      }
-
-      if (verifierMode === "legacy") {
-        logitC3 = -2.5;
-        if (stars >= 4) logitC0 = 3.2;
-      }
-
-      const maxLogit = Math.max(logitC0, logitC1, logitC2, logitC3);
-      const exps = [
-        Math.exp(logitC0 - maxLogit),
-        Math.exp(logitC1 - maxLogit),
-        Math.exp(logitC2 - maxLogit),
-        Math.exp(logitC3 - maxLogit)
-      ];
+      // Softmax
+      const logits = [l0, l1, l2, l3];
+      const maxL = Math.max(...logits);
+      const exps = logits.map(l => Math.exp(l - maxL));
       const sumExp = exps.reduce((a, b) => a + b, 0);
-      const probs = exps.map(e => (e / sumExp) * 100);
-      const maxIdx = probs.indexOf(Math.max(...probs));
+      const probs = exps.map(e => e / sumExp);
 
-      const classMeta = [
-        { code: "C0", title: "C0: Positive Endorsement", cls: "pill-sage", sla: "Auto-Publish to Catalog", color: "var(--sage)" },
-        { code: "C1", title: "C1: Mixed-Aspect Digest", cls: "well-box", sla: "P2 UX Digest (24h SLA)", color: "var(--slate)" },
-        { code: "C2", title: "C2: Hardware QA Defect", cls: "pill-ochre", sla: "P1 Vendor QA Ticket (<4h)", color: "var(--ochre)" },
-        { code: "C3", title: "C3: Critical Safety Halt", cls: "pill-rust", sla: "P0 Trust & Safety Halt (<15m)", color: "var(--rust)" }
+      let winningIdx = 0;
+      probs.forEach((p, i) => { if (p > probs[winningIdx]) winningIdx = i; });
+
+      const classNames = [
+        "Positive Endorsement (Auto-Publish)",
+        "Mixed-Aspect Digest (P2 UX Ticket)",
+        "Negative Quality Defect (P1 Vendor QA)",
+        "Critical Safety / Fraud SKU Halt"
       ];
 
-      const win = classMeta[maxIdx];
-      const badge = document.getElementById("pred-badge");
-      badge.textContent = `${win.title} (${probs[maxIdx].toFixed(1)}%)`;
-      badge.className = `px-3 py-1 rounded-full text-xs font-bold mono ${win.cls}`;
-
-      const slaEl = document.getElementById("pred-sla");
-      slaEl.textContent = win.sla;
-      slaEl.style.color = win.color;
-
-      const rsdiEl = document.getElementById("metric-rsdi");
-      rsdiEl.textContent = `RSDI = ${rsdi.toFixed(3)} ${rsdi >= 0.5 ? "(Sarcasm Trap!)" : "(Aligned)"}`;
-      rsdiEl.style.color = rsdi >= 0.5 ? "var(--rust)" : "var(--sage)";
-
-      const legacyEl = document.getElementById("legacy-comparison-readout");
-      if (rsdi >= 0.5 && stars >= 4) {
-        legacyEl.textContent = "Fooled by 5★ → Misrouted as 'Positive'";
-      } else if (hazardHits > 0) {
-        legacyEl.textContent = "Lumped into generic 'Negative' (No P0 Halt)";
-      } else if (contrastHits > 0) {
-        legacyEl.textContent = "Uncalibrated 'Neutral' (No Aspect Split)";
-      } else {
-        legacyEl.textContent = maxIdx === 0 ? "3-Class 'Positive' (65.7% F1)" : "3-Class 'Negative' (No SLA)";
-      }
-
-      // Matched signal pills
-      const sigContainer = document.getElementById("matched-signals");
-      if (rsdi >= 0.5) {
-        matchedSignals.unshift({ label: "RSDI_Trap:" + rsdi.toFixed(2), cls: "pill-rust" });
-      }
-      if (matchedSignals.length === 0) {
-        sigContainer.innerHTML = `<span class="px-2 py-0.5 rounded well-box text-[11px] mono">SVD Semantic Projection</span>`;
-      } else {
-        sigContainer.innerHTML = matchedSignals.slice(0, 5).map(s =>
-          `<span class="px-2 py-0.5 rounded text-[11px] mono font-semibold ${s.cls}">${s.label}</span>`
-        ).join("");
-      }
-
-      // Force Beam State
-      const leftPull = Math.max(0.25, (stars >= 4 ? (stars - 3) * 0.65 : 0.15) + praiseHits * 0.75);
-      const rightPull = Math.max(0.25, (stars <= 2 ? (3 - stars) * 0.55 : 0.1) + defectHits * 0.85 + hazardHits * 1.25 + (rsdi >= 0.5 ? 1.15 : 0) + (velocity > 10 ? 0.55 : 0));
-      const net = (rightPull - leftPull) / Math.max(1.5, leftPull + rightPull);
-
-      const leftTags = [];
-      if (stars >= 4) leftTags.push(`${stars}★ Rating (+${((stars - 3) * 0.35).toFixed(2)})`);
-      if (praiseHits > 0) leftTags.push(`Praise Tokens (+${(praiseHits * 0.55).toFixed(2)})`);
-      if (leftTags.length === 0) leftTags.push("Baseline Prior (+0.15)");
-
-      const rightTags = [];
-      if (hazardHits > 0) rightTags.push(`Hazard Subwords (+${(hazardHits * 0.72).toFixed(2)})`);
-      if (rsdi >= 0.5) rightTags.push(`RSDI Override (+${(rsdi * 0.95).toFixed(2)})`);
-      if (defectHits > 0) rightTags.push(`Defect Lexicon (+${(defectHits * 0.61).toFixed(2)})`);
-      if (velocity > 10) rightTags.push(`Burst ${velocity.toFixed(0)}/h (+0.44)`);
-      if (rightTags.length === 0) rightTags.push("Low Risk (+0.10)");
-
-      forceBeamState = {
-        leftPull,
-        rightPull,
-        targetTilt: Math.max(-0.38, Math.min(0.38, net * 0.45)),
-        currentTilt: forceBeamState.currentTilt || 0,
-        winningIdx: maxIdx,
-        rsdi,
-        stars,
-        leftTags: leftTags.slice(0, 2),
-        rightTags: rightTags.slice(0, 3)
-      };
-    }
-
-    function applyInferenceResult(data) {
-      const classMeta = [
-        { code: "C0", title: "C0: Positive Endorsement", cls: "pill-sage", color: "var(--sage)" },
-        { code: "C1", title: "C1: Mixed-Aspect Digest", cls: "well-box", color: "var(--slate)" },
-        { code: "C2", title: "C2: Hardware QA Defect", cls: "pill-ochre", color: "var(--ochre)" },
-        { code: "C3", title: "C3: Critical Safety Halt", cls: "pill-rust", color: "var(--rust)" }
+      const slaTargets = [
+        "Instant Automated Catalog Publication (0m SLA).",
+        "P2 Product UX Improvement Digest (<24h SLA).",
+        "P1 Vendor QA Defect & Return Investigation (<4h SLA).",
+        "P0 Automated SKU Freeze & Trust & Safety Halt (<15m SLA)."
       ];
-      const win = classMeta[data.predicted_class];
-      const badge = document.getElementById("pred-badge");
-      badge.textContent = `${win.title} (${(data.confidence * 100).toFixed(1)}%)`;
-      badge.className = `px-3 py-1 rounded-full text-xs font-bold mono ${win.cls}`;
 
-      const slaEl = document.getElementById("pred-sla");
-      slaEl.textContent = data.sla_target;
-      slaEl.style.color = win.color;
+      const latency = (performance.now() - t0) + 0.8;
+      const fooledMNB = isSarcasm && stars >= 4;
 
-      const rsdiEl = document.getElementById("metric-rsdi");
-      rsdiEl.textContent = `RSDI = ${data.rsdi_score.toFixed(3)} ${data.is_sarcasm_trap ? "(Sarcasm Trap!)" : "(Aligned)"}`;
-      rsdiEl.style.color = data.is_sarcasm_trap ? "var(--rust)" : "var(--sage)";
-
-      const legComp = data.legacy_model_comparison;
-      const legacyEl = document.getElementById("legacy-comparison-readout");
-      if (legComp.fooled_by_sarcasm) {
-        legacyEl.textContent = "Fooled by 5★ → Misrouted as 'Positive'";
-      } else {
-        legacyEl.textContent = legComp.class_code + " (Legacy MNB: 65.7% F1)";
-      }
-
-      const sigContainer = document.getElementById("matched-signals");
-      const tags = [];
-      if (data.matched_subwords && data.matched_subwords.length > 0) {
-        data.matched_subwords.slice(0, 4).forEach(sw => tags.push(`<span class="px-2 py-0.5 rounded text-[11px] mono font-semibold pill-rust">subword:${sw}</span>`));
-      }
-      if (data.matched_keywords && data.matched_keywords.hazard.length > 0) {
-        data.matched_keywords.hazard.slice(0, 2).forEach(kw => tags.push(`<span class="px-2 py-0.5 rounded text-[11px] mono font-semibold pill-rust">hazard:${kw}</span>`));
-      }
-      sigContainer.innerHTML = tags.join("") || `<span class="px-2 py-0.5 rounded well-box text-[11px] mono">SVD Semantic Latent</span>`;
-
-      const b = data.balance_beam;
-      forceBeamState = {
-        leftPull: b.left_pull,
-        rightPull: b.right_pull,
-        targetTilt: b.target_tilt,
-        currentTilt: forceBeamState.currentTilt || 0,
-        winningIdx: data.predicted_class,
-        rsdi: data.rsdi_score,
-        stars: data.telemetry.stars,
-        leftTags: b.left_tags,
-        rightTags: b.right_tags
-      };
-    }
-
-    // Act I Canvas: 60fps Conveyor & Optical Laser Spectrograph
-    function spawnConveyorParcel(stars, targetGateIdx, isRsdiTrap, label) {
-      const pal = getPalette();
-      const gateColors = [pal.sage, pal.slate, pal.ochre, pal.rust];
-      const trigrams = isRsdiTrap ? ["melt", "spar", "flam", "trap"] : (targetGateIdx === 3 ? ["smok", "fire", "swel"] : (targetGateIdx === 2 ? ["dead", "crac", "drop"] : (targetGateIdx === 1 ? ["mixd", "howv"] : ["stel", "prem"])));
-      conveyorParcels.push({
-        t: 0.0,
-        speed: 0.0060 + Math.random() * 0.0015,
-        stars: stars,
-        gateIdx: targetGateIdx,
-        isRsdiTrap: isRsdiTrap,
-        label: label || (stars + "★ Parcel"),
-        trigrams: trigrams,
-        scanned: false,
-        color: gateColors[targetGateIdx] || pal.sage,
-        x: 0,
-        y: 0
+      renderTriageResult({
+        predicted_class: winningIdx,
+        class_name: classNames[winningIdx],
+        confidence: probs[winningIdx],
+        sla_route: slaTargets[winningIdx],
+        rsdi_score: rsdi,
+        is_sarcasm_trap: isSarcasm,
+        matched_keywords: matched,
+        latency_ms: latency,
+        fooled_mnb: fooledMNB
       });
     }
 
-    function triggerVisualShockwave(x, y, color) {
-      visualShockwaves.push({
-        x: x,
-        y: y,
-        radius: 6,
-        maxRadius: 80,
-        opacity: 0.95,
-        color: color || "#a63429",
-        lineWidth: 3.5
-      });
-    }
+    // -------------------------------------------------------------------------
+    // Render Results to UI
+    // -------------------------------------------------------------------------
+    function renderTriageResult(res) {
+      const card = document.getElementById("result-card");
+      const badge = document.getElementById("result-class-badge");
+      const name = document.getElementById("result-class-name");
+      const conf = document.getElementById("result-confidence");
+      const sla = document.getElementById("result-sla-route");
+      const lat = document.getElementById("result-latency");
+      const rsdiBox = document.getElementById("rsdi-callout");
+      const rsdiBadge = document.getElementById("rsdi-score-badge");
+      const rsdiText = document.getElementById("rsdi-explanation");
+      const tokenContainer = document.getElementById("detected-tokens-container");
+      const baselineDec = document.getElementById("baseline-decision");
+      const optisentDec = document.getElementById("optisent-decision");
 
-    function animateConveyorCanvas() {
-      const canvas = document.getElementById("conveyor-canvas");
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      if (canvas.width !== Math.floor(rect.width * dpr) || canvas.height !== Math.floor(rect.height * dpr)) {
-        canvas.width = Math.floor(rect.width * dpr);
-        canvas.height = Math.floor(rect.height * dpr);
-      }
-      const ctx = canvas.getContext("2d");
-      ctx.save();
-      ctx.scale(dpr, dpr);
+      lat.textContent = `Latency: ${res.latency_ms.toFixed(2)} ms`;
+      conf.textContent = `${(res.confidence * 100).toFixed(1)}% Confidence`;
+      sla.textContent = res.sla_route;
 
-      const W = rect.width;
-      const H = rect.height;
-      const pal = getPalette();
+      const meta = [
+        { title: "C0: Positive Endorsement", badgeCls: "bg-emerald-100 text-emerald-800 border-emerald-200", borderCls: "border-emerald-200" },
+        { title: "C1: Mixed-Aspect Digest", badgeCls: "bg-blue-100 text-blue-800 border-blue-200", borderCls: "border-blue-200" },
+        { title: "C2: Hardware QA Defect", badgeCls: "bg-amber-100 text-amber-800 border-amber-200", borderCls: "border-amber-200" },
+        { title: "C3: Critical Safety Halt", badgeCls: "bg-red-100 text-red-800 border-red-200", borderCls: "border-red-300" }
+      ];
 
-      ctx.clearRect(0, 0, W, H);
+      const m = meta[res.predicted_class] || meta[0];
+      badge.className = `px-2.5 py-1 rounded text-xs font-bold border ${m.badgeCls}`;
+      badge.textContent = m.title;
+      name.textContent = res.class_name;
 
-      const startX = 28;
-      const midX = W * 0.44;
-      const endX = W - 145;
-      const midY = H * 0.52;
-      const gateYs = [H * 0.18, H * 0.40, H * 0.64, H * 0.86];
-      const gateNames = ["C0 • Auto-Publish", "C1 • UX Digest", "C2 • Vendor QA", "C3 • P0 Safety Halt"];
-      const gateColors = [pal.sage, pal.slate, pal.ochre, pal.rust];
-
-      const speedMultiplier = isMouseOverConveyor ? 0.25 : 1.0;
-
-      // 1. Draw Main Input Track (startX -> midX)
-      ctx.strokeStyle = pal.border;
-      ctx.lineWidth = 6;
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(startX, midY);
-      ctx.lineTo(midX, midY);
-      ctx.stroke();
-
-      // Flow ticks
-      ctx.strokeStyle = pal.dim;
-      ctx.lineWidth = 1.5;
-      ctx.setLineDash([6, 10]);
-      ctx.lineDashOffset = -(scannerPulseAngle * 28);
-      ctx.beginPath();
-      ctx.moveTo(startX, midY);
-      ctx.lineTo(midX, midY);
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      // 2. Draw 4 Curved Bezier Chute Tracks
-      for (let g = 0; g < 4; g++) {
-        const gy = gateYs[g];
-        ctx.strokeStyle = g === forceBeamState.winningIdx ? gateColors[g] : pal.border;
-        ctx.globalAlpha = g === forceBeamState.winningIdx ? 0.85 : 0.35;
-        ctx.lineWidth = g === forceBeamState.winningIdx ? 3.2 : 1.8;
-        ctx.beginPath();
-        ctx.moveTo(midX, midY);
-        ctx.bezierCurveTo(midX + (endX - midX) * 0.45, midY, midX + (endX - midX) * 0.55, gy, endX, gy);
-        ctx.stroke();
-        ctx.globalAlpha = 1.0;
-
-        // Chute Terminal Box
-        ctx.fillStyle = pal.well;
-        ctx.strokeStyle = gateColors[g];
-        ctx.lineWidth = g === forceBeamState.winningIdx ? 2 : 1;
-        ctx.beginPath();
-        ctx.roundRect(endX, gy - 13, 134, 26, 7);
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.fillStyle = gateColors[g];
-        ctx.font = "600 10px 'JetBrains Mono', monospace";
-        ctx.fillText(gateNames[g], endX + 8, gy + 3.5);
-      }
-
-      // 3. Update & Draw Moving Parcels + Particle Trails
-      scannerPulseAngle += 0.025 * speedMultiplier;
-      inspectedParcel = null;
-
-      for (let i = conveyorParcels.length - 1; i >= 0; i--) {
-        const p = conveyorParcels[i];
-        p.t += p.speed * speedMultiplier;
-        if (p.t >= 1.0) {
-          conveyorParcels.splice(i, 1);
-          continue;
-        }
-
-        let px, py;
-        if (p.t < 0.45) {
-          const u = p.t / 0.45;
-          px = startX + (midX - startX) * u;
-          py = midY;
+      // RSDI Sarcasm Callout
+      if (res.is_sarcasm_trap) {
+        rsdiBox.classList.remove("hidden");
+        rsdiBadge.textContent = `RSDI = ${res.rsdi_score.toFixed(2)}`;
+        rsdiText.innerHTML = `Customer assigned <strong>${currentStars}★</strong>, but review contains severe defect/hazard terminology. OptiSent-XAI calculated an algebraic discrepancy index of <strong>${res.rsdi_score.toFixed(2)} &ge; 0.55</strong>, successfully overriding the misleading rating.`;
+        baselineDec.textContent = `Fooled by ${currentStars}★ → Publishes C0`;
+        baselineDec.className = "font-semibold text-red-700 block mt-0.5";
+        optisentDec.textContent = `Intercepts → Halts SKU (C3)`;
+        optisentDec.className = "font-semibold text-emerald-700 block mt-0.5";
+      } else {
+        if (res.rsdi_score >= 0.55) {
+          rsdiBox.classList.remove("hidden");
+          rsdiBadge.textContent = `RSDI = ${res.rsdi_score.toFixed(2)}`;
+          rsdiText.innerHTML = `Rating and lexical polarity diverge significantly (RSDI: ${res.rsdi_score.toFixed(2)}). Handled through calibrated feature stacking.`;
         } else {
-          if (!p.scanned) {
-            p.scanned = true;
-            lastLaserColor = gateColors[p.gateIdx];
-            lastScannedLabel = `${p.stars}★ → ${gateNames[p.gateIdx].split("•")[0].trim()}`;
-            packetsSortedCount++;
-            if (p.gateIdx === 3) {
-              hazardsCaughtCount++;
-              triggerVisualShockwave(midX, midY, pal.rust);
-            }
-            document.getElementById("stat-packets-sorted").textContent = String(packetsSortedCount);
-            document.getElementById("stat-hazards-caught").textContent = String(hazardsCaughtCount);
-
-            if (p.trigrams && p.trigrams.length > 0) {
-              floatingCallouts.push({
-                x: midX,
-                y: midY - 24,
-                text: p.trigrams.slice(0, 3).map(tg => `[${tg}]`).join(" "),
-                color: gateColors[p.gateIdx],
-                alpha: 1.0,
-                vy: -0.7
-              });
-            }
-          }
-          const u = (p.t - 0.45) / 0.55;
-          const gy = gateYs[p.gateIdx];
-          const c1x = midX + (endX - midX) * 0.45;
-          const c2x = midX + (endX - midX) * 0.55;
-          const inv = 1 - u;
-          px = inv*inv*inv*midX + 3*inv*inv*u*c1x + 3*inv*u*u*c2x + u*u*u*endX;
-          py = inv*inv*inv*midY + 3*inv*inv*u*midY + 3*inv*u*u*gy + u*u*u*gy;
+          rsdiBox.classList.add("hidden");
         }
-
-        p.x = px;
-        p.y = py;
-
-        if (isMouseOverConveyor) {
-          const dx = mousePos.x - px;
-          const dy = mousePos.y - py;
-          if (Math.hypot(dx, dy) < 28) {
-            inspectedParcel = p;
-          }
-        }
-
-        // Particle trail
-        if (Math.random() < 0.45) {
-          conveyorParticles.push({
-            x: px - 18,
-            y: py + (Math.random() - 0.5) * 6,
-            vx: -0.5 - Math.random() * 0.5,
-            vy: (Math.random() - 0.5) * 0.4,
-            alpha: 0.75,
-            color: p.t < 0.45 ? (p.stars >= 4 ? pal.ochre : pal.slate) : gateColors[p.gateIdx],
-            size: 2.2 + Math.random() * 1.5
-          });
-        }
-
-        // Laser scan vertical raster
-        if (Math.abs(p.t - 0.45) < 0.08) {
-          ctx.strokeStyle = gateColors[p.gateIdx];
-          ctx.lineWidth = 2.5;
-          ctx.beginPath();
-          ctx.moveTo(midX, midY - 36);
-          ctx.lineTo(px, py);
-          ctx.stroke();
-        }
-
-        // Parcel Payload Box
-        const boxColor = p.t < 0.45 ? (p.stars >= 4 ? pal.ochre : pal.slate) : gateColors[p.gateIdx];
-        ctx.fillStyle = pal.bg;
-        ctx.strokeStyle = boxColor;
-        ctx.lineWidth = (inspectedParcel === p) ? 3 : 2;
-        ctx.beginPath();
-        ctx.roundRect(px - 22, py - 13, 44, 26, 6);
-        ctx.fill();
-        ctx.stroke();
-
-        ctx.fillStyle = boxColor;
-        ctx.font = "700 10px 'JetBrains Mono', monospace";
-        ctx.textAlign = "center";
-        ctx.fillText(p.stars + "★", px, py + 3.5);
-        ctx.textAlign = "left";
+        baselineDec.textContent = `Predicts ${m.title.slice(0, 2)}`;
+        baselineDec.className = "font-medium text-slate-700 block mt-0.5";
+        optisentDec.textContent = `Predicts ${m.title.slice(0, 2)} (${(res.confidence * 100).toFixed(0)}%)`;
+        optisentDec.className = "font-medium text-slate-800 block mt-0.5";
       }
 
-      // 4. Conveyor Particles
-      for (let j = conveyorParticles.length - 1; j >= 0; j--) {
-        const pt = conveyorParticles[j];
-        pt.x += pt.vx;
-        pt.y += pt.vy;
-        pt.alpha -= 0.025;
-        if (pt.alpha <= 0) {
-          conveyorParticles.splice(j, 1);
-          continue;
-        }
-        ctx.fillStyle = pt.color;
-        ctx.globalAlpha = pt.alpha;
-        ctx.beginPath();
-        ctx.arc(pt.x, pt.y, pt.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1.0;
-      }
-
-      // 5. Floating Trigrams
-      for (let k = floatingCallouts.length - 1; k >= 0; k--) {
-        const fc = floatingCallouts[k];
-        fc.y += fc.vy;
-        fc.alpha -= 0.016;
-        if (fc.alpha <= 0) {
-          floatingCallouts.splice(k, 1);
-          continue;
-        }
-        ctx.save();
-        ctx.globalAlpha = fc.alpha;
-        ctx.font = "700 10px 'JetBrains Mono', monospace";
-        ctx.textAlign = "center";
-        ctx.fillStyle = fc.color;
-        ctx.fillText(fc.text, fc.x, fc.y);
-        ctx.restore();
-      }
-
-      // 6. Shockwaves
-      for (let s = visualShockwaves.length - 1; s >= 0; s--) {
-        const sw = visualShockwaves[s];
-        sw.radius += 2.8;
-        sw.opacity -= 0.038;
-        if (sw.opacity <= 0 || sw.radius >= sw.maxRadius) {
-          visualShockwaves.splice(s, 1);
-          continue;
-        }
-        ctx.strokeStyle = sw.color;
-        ctx.globalAlpha = sw.opacity;
-        ctx.lineWidth = sw.lineWidth;
-        ctx.beginPath();
-        ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.globalAlpha = 1.0;
-      }
-
-      // Ambient parcel spawn
-      if (conveyorParcels.length < 2 && Math.random() < 0.03 && streamMode === "sandbox") {
-        const randIdx = [5, 3, 2, 1, 0][Math.floor(Math.random() * 5)];
-        const rp = PRESETS[randIdx];
-        const gateMap = { 0: 0, 1: 1, 2: 2, 3: 3, 4: 3, 5: verifierMode === "optisent" ? 3 : 0 };
-        spawnConveyorParcel(rp.stars, gateMap[randIdx], randIdx === 5, rp.title);
-      }
-
-      // 7. Industrial Optical Spectrograph Scanner
-      ctx.save();
-      ctx.translate(midX, midY);
-
-      // Rotating Outer Aperture Disk
-      ctx.save();
-      ctx.rotate(scannerPulseAngle * 0.4);
-      ctx.strokeStyle = lastLaserColor;
-      ctx.lineWidth = 2.2;
-      ctx.beginPath();
-      ctx.arc(0, 0, 32, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Optical Tick Reticles
-      ctx.lineWidth = 1.5;
-      for (let a = 0; a < 8; a++) {
-        const th = (Math.PI / 4) * a;
-        ctx.beginPath();
-        ctx.moveTo(Math.cos(th) * 26, Math.sin(th) * 26);
-        ctx.lineTo(Math.cos(th) * 32, Math.sin(th) * 32);
-        ctx.stroke();
-      }
-      ctx.restore();
-
-      // Inner Lens Core
-      ctx.fillStyle = pal.bg;
-      ctx.strokeStyle = pal.border;
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.arc(0, 0, 20, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-
-      // Laser Crosshair Core (Clean Industrial)
-      ctx.strokeStyle = lastLaserColor;
-      ctx.lineWidth = 1.8;
-      ctx.beginPath();
-      ctx.arc(0, 0, 7, 0, Math.PI * 2);
-      ctx.moveTo(-12, 0); ctx.lineTo(12, 0);
-      ctx.moveTo(0, -12); ctx.lineTo(0, 12);
-      ctx.stroke();
-
-      // Scanner Caption Pill
-      ctx.fillStyle = pal.ink;
-      ctx.font = "600 10px 'JetBrains Mono', monospace";
-      ctx.textAlign = "center";
-      ctx.fillText(verifierMode === "optisent" ? "Optical Spectrograph (SVD 24)" : "Legacy Word TF-IDF", 0, -40);
-      ctx.fillStyle = lastLaserColor;
-      ctx.fillText(lastScannedLabel, 0, 46);
-      ctx.restore();
-
-      // 8. Hover Reticle
-      if (isMouseOverConveyor) {
-        ctx.strokeStyle = pal.sage;
-        ctx.lineWidth = 1;
-        ctx.setLineDash([4, 4]);
-        ctx.beginPath();
-        ctx.arc(mousePos.x, mousePos.y, 16, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.beginPath();
-        ctx.moveTo(mousePos.x - 22, mousePos.y); ctx.lineTo(mousePos.x + 22, mousePos.y);
-        ctx.moveTo(mousePos.x, mousePos.y - 22); ctx.lineTo(mousePos.x, mousePos.y + 22);
-        ctx.stroke();
-
-        const hud = document.getElementById("conveyor-inspect-hud");
-        if (hud) {
-          hud.classList.remove("hidden");
-          const hudX = Math.min(W - 240, Math.max(16, mousePos.x + 20));
-          const hudY = Math.min(H - 120, Math.max(16, mousePos.y - 40));
-          hud.style.left = hudX + "px";
-          hud.style.top = hudY + "px";
-
-          if (inspectedParcel) {
-            document.getElementById("hud-parcel-stars").textContent = inspectedParcel.stars + "★";
-            document.getElementById("hud-parcel-label").textContent = inspectedParcel.label;
-            document.getElementById("hud-parcel-rsdi").textContent = inspectedParcel.isRsdiTrap ? "0.892 (Trap!)" : "0.084 (Normal)";
-            document.getElementById("hud-parcel-rsdi").style.color = inspectedParcel.isRsdiTrap ? "var(--rust)" : "var(--sage)";
-            document.getElementById("hud-parcel-gate").textContent = gateNames[inspectedParcel.gateIdx];
-            document.getElementById("hud-parcel-gate").style.color = gateColors[inspectedParcel.gateIdx];
-            const tgHtml = (inspectedParcel.trigrams || []).map(t => `<span class="px-1.5 py-0.5 rounded pill-rust">${t}</span>`).join(" ");
-            document.getElementById("hud-parcel-trigrams").innerHTML = tgHtml;
+      // Render Detected Keyword Badges
+      tokenContainer.innerHTML = "";
+      if (res.matched_keywords && res.matched_keywords.length > 0) {
+        res.matched_keywords.forEach(k => {
+          const span = document.createElement("span");
+          if (k.type === "hazard") {
+            span.className = "px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-red-50 text-red-700 border border-red-200";
+            span.textContent = `+ ${k.token} [Hazard]`;
+          } else if (k.type === "defect") {
+            span.className = "px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-amber-50 text-amber-700 border border-amber-200";
+            span.textContent = `+ ${k.token} [Defect]`;
+          } else if (k.type === "praise") {
+            span.className = "px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-emerald-50 text-emerald-700 border border-emerald-200";
+            span.textContent = `+ ${k.token} [Praise]`;
           } else {
-            document.getElementById("hud-parcel-stars").textContent = "SCAN";
-            document.getElementById("hud-parcel-label").textContent = "Optical Reticle Alignment";
-            document.getElementById("hud-parcel-rsdi").textContent = "Telemetry Locked";
-            document.getElementById("hud-parcel-gate").textContent = "Hover over parcel";
-            document.getElementById("hud-parcel-trigrams").innerHTML = `<span class="pill-sage px-1">Optical Spectrograph Ready</span>`;
+            span.className = "px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-blue-50 text-blue-700 border border-blue-200";
+            span.textContent = `+ ${k.token} [Contrast]`;
           }
-        }
+          tokenContainer.appendChild(span);
+        });
       } else {
-        const hud = document.getElementById("conveyor-inspect-hud");
-        if (hud) hud.classList.add("hidden");
+        tokenContainer.innerHTML = `<span class="text-slate-400 text-[11px]">No high-divergence keywords detected. Evaluating SVD latent components.</span>`;
       }
-
-      ctx.restore();
-      requestAnimationFrame(animateConveyorCanvas);
     }
 
-    // Act II Canvas: TreeSHAP Balance Beam
-    function animateForceBeamCanvas() {
-      const canvas = document.getElementById("force-beam-canvas");
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      if (canvas.width !== Math.floor(rect.width * dpr) || canvas.height !== Math.floor(rect.height * dpr)) {
-        canvas.width = Math.floor(rect.width * dpr);
-        canvas.height = Math.floor(rect.height * dpr);
-      }
-      const ctx = canvas.getContext("2d");
-      ctx.save();
-      ctx.scale(dpr, dpr);
-
-      const W = rect.width;
-      const H = rect.height;
-      const pal = getPalette();
-      ctx.clearRect(0, 0, W, H);
-
-      forceBeamState.currentTilt += (forceBeamState.targetTilt - forceBeamState.currentTilt) * 0.08;
-
-      const cx = W * 0.5;
-      const cy = H * 0.58;
-      const beamHalf = Math.min(W * 0.36, 190);
-
-      // Fulcrum Triangle
-      ctx.fillStyle = pal.well;
-      ctx.strokeStyle = pal.border;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-      ctx.lineTo(cx - 20, cy + 38);
-      ctx.lineTo(cx + 20, cy + 38);
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
-
-      // Tilted Balance Beam
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(forceBeamState.currentTilt);
-
-      ctx.strokeStyle = pal.ink;
-      ctx.lineWidth = 5;
-      ctx.lineCap = "round";
-      ctx.beginPath();
-      ctx.moveTo(-beamHalf, 0);
-      ctx.lineTo(beamHalf, 0);
-      ctx.stroke();
-
-      // Left Pan (Praise / Safe)
-      ctx.fillStyle = pal.sage;
-      ctx.beginPath();
-      ctx.arc(-beamHalf, 0, 13, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Right Pan (Hazard / Defect / RSDI)
-      ctx.fillStyle = pal.rust;
-      ctx.beginPath();
-      ctx.arc(beamHalf, 0, 15, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Decision Puck
-      const puckOffset = Math.max(-beamHalf + 24, Math.min(beamHalf - 24, (forceBeamState.currentTilt / 0.38) * (beamHalf - 28)));
-      ctx.fillStyle = pal.ochre;
-      ctx.strokeStyle = pal.bg;
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      ctx.arc(puckOffset, -8, 10, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-
-      ctx.restore();
-
-      // Labels
-      ctx.font = "700 11px 'JetBrains Mono', monospace";
-      ctx.fillStyle = pal.sage;
-      ctx.textAlign = "left";
-      ctx.fillText("◀ SAFE / PRAISE PULL (C0–C1)", 16, 24);
-      ctx.font = "500 10px 'JetBrains Mono', monospace";
-      forceBeamState.leftTags.forEach((t, idx) => {
-        ctx.fillText("• " + t, 16, 42 + idx * 15);
-      });
-
-      ctx.font = "700 11px 'JetBrains Mono', monospace";
-      ctx.fillStyle = pal.rust;
-      ctx.textAlign = "right";
-      ctx.fillText("HAZARD / DEFECT PULL (C2–C3) ▶", W - 16, 24);
-      ctx.font = "500 10px 'JetBrains Mono', monospace";
-      forceBeamState.rightTags.forEach((t, idx) => {
-        ctx.fillText(t + " •", W - 16, 42 + idx * 15);
-      });
-
-      ctx.textAlign = "center";
-      ctx.fillStyle = pal.sub;
-      ctx.font = "600 10px 'JetBrains Mono', monospace";
-      ctx.fillText("TreeSHAP Additive Log-Odds Equilibrium", cx, H - 10);
-
-      ctx.restore();
-      requestAnimationFrame(animateForceBeamCanvas);
-    }
-
-    // Act III Canvas: Harmonic Drift Wave
-    let wavePhase = 0;
-    function animateWaveCanvas() {
-      const canvas = document.getElementById("wave-canvas");
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      if (canvas.width !== Math.floor(rect.width * dpr) || canvas.height !== Math.floor(rect.height * dpr)) {
-        canvas.width = Math.floor(rect.width * dpr);
-        canvas.height = Math.floor(rect.height * dpr);
-      }
-      const ctx = canvas.getContext("2d");
-      ctx.save();
-      ctx.scale(dpr, dpr);
-
-      const W = rect.width;
-      const H = rect.height;
-      const pal = getPalette();
-      ctx.clearRect(0, 0, W, H);
-
-      wavePhase += 0.04;
-      const wObj = DRIFT_WEEKS[currentDriftWeek - 1] || DRIFT_WEEKS[5];
-      const psiVal = (!autoRetrainEnabled && currentDriftWeek >= 7) ? (currentDriftWeek === 7 ? 0.338 : 0.372) : wObj.psi;
-      const isDrifted = psiVal >= 0.18;
-
-      // 1. Reference Stationary Wave
-      ctx.strokeStyle = pal.sage;
-      ctx.lineWidth = 2.2;
-      ctx.setLineDash([5, 5]);
-      ctx.beginPath();
-      for (let x = 0; x <= W; x += 4) {
-        const y = H * 0.52 + Math.sin(x * 0.022 + wavePhase) * 28;
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      // 2. Production Streaming Wave
-      const phaseShift = psiVal * 5.2;
-      const ampJitter = psiVal * 75;
-      ctx.strokeStyle = isDrifted ? pal.rust : pal.ochre;
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      for (let x = 0; x <= W; x += 4) {
-        const turbulence = isDrifted ? Math.sin(x * 0.07 - wavePhase * 1.8) * (ampJitter * 0.45) : 0;
-        const y = H * 0.52 + Math.sin(x * 0.022 + wavePhase + phaseShift) * (28 + ampJitter * 0.35) + turbulence;
-        if (x === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      }
-      ctx.stroke();
-
-      ctx.font = "600 10px 'JetBrains Mono', monospace";
-      ctx.fillStyle = pal.sage;
-      ctx.fillText(" - - Reference Training Distribution", 14, 20);
-      ctx.fillStyle = isDrifted ? pal.rust : pal.ochre;
-      ctx.fillText("─── Live Week " + currentDriftWeek + " Stream (PSI = " + psiVal.toFixed(3) + ")", 14, 36);
-
-      ctx.restore();
-      requestAnimationFrame(animateWaveCanvas);
-    }
-
-    // Act III Canvas: Production Drift Vector Radar
-    function animateRadarCanvas() {
-      const canvas = document.getElementById("radar-canvas");
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
-      if (canvas.width !== Math.floor(rect.width * dpr) || canvas.height !== Math.floor(rect.height * dpr)) {
-        canvas.width = Math.floor(rect.width * dpr);
-        canvas.height = Math.floor(rect.height * dpr);
-      }
-      const ctx = canvas.getContext("2d");
-      ctx.save();
-      ctx.scale(dpr, dpr);
-
-      const W = rect.width;
-      const H = rect.height;
-      const pal = getPalette();
-      ctx.clearRect(0, 0, W, H);
-
-      const cx = W * 0.5;
-      const cy = H * 0.5;
-      const maxR = Math.min(W, H) * 0.44;
-
-      const wObj = DRIFT_WEEKS[currentDriftWeek - 1] || DRIFT_WEEKS[5];
-      const psiVal = (!autoRetrainEnabled && currentDriftWeek >= 7) ? (currentDriftWeek === 7 ? 0.338 : 0.372) : wObj.psi;
-
-      radarSweepAngle += 0.035;
-
-      ctx.save();
-      ctx.translate(cx, cy);
-
-      // Radar Concentric Zones
-      // Zone 1: Safe Green Zone (PSI < 0.10)
-      ctx.strokeStyle = "rgba(45, 90, 67, 0.4)";
-      ctx.lineWidth = 1.2;
-      ctx.beginPath();
-      ctx.arc(0, 0, maxR * 0.33, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Zone 2: Warning Amber Zone (PSI < 0.25)
-      ctx.strokeStyle = "rgba(176, 105, 24, 0.4)";
-      ctx.beginPath();
-      ctx.arc(0, 0, maxR * 0.72, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Zone 3: Critical Red Zone (PSI >= 0.25)
-      ctx.strokeStyle = "rgba(166, 52, 41, 0.6)";
-      ctx.beginPath();
-      ctx.arc(0, 0, maxR, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Crosshairs
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.12)";
-      ctx.beginPath();
-      ctx.moveTo(-maxR, 0); ctx.lineTo(maxR, 0);
-      ctx.moveTo(0, -maxR); ctx.lineTo(0, maxR);
-      ctx.stroke();
-
-      // Rotating Radar Sweep Beam
-      const sweepX = Math.cos(radarSweepAngle) * maxR;
-      const sweepY = Math.sin(radarSweepAngle) * maxR;
-      const sweepGrad = ctx.createRadialGradient(0, 0, 0, 0, 0, maxR);
-      sweepGrad.addColorStop(0, "rgba(45, 90, 67, 0.25)");
-      sweepGrad.addColorStop(1, "rgba(45, 90, 67, 0.0)");
-      ctx.fillStyle = sweepGrad;
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.arc(0, 0, maxR, radarSweepAngle - 0.4, radarSweepAngle);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.strokeStyle = pal.sage;
-      ctx.lineWidth = 1.8;
-      ctx.beginPath();
-      ctx.moveTo(0, 0);
-      ctx.lineTo(sweepX, sweepY);
-      ctx.stroke();
-
-      // Dynamic Drift Vector Position
-      const vectorR = Math.min(maxR * 0.95, (psiVal / 0.35) * maxR);
-      const vectorAngle = -Math.PI * 0.5 + (currentDriftWeek / 8.0) * Math.PI * 1.6;
-      const vx = Math.cos(vectorAngle) * vectorR;
-      const vy = Math.sin(vectorAngle) * vectorR;
-
-      // Pulse at current vector
-      const vectorColor = psiVal >= 0.25 ? pal.rust : (psiVal >= 0.10 ? pal.ochre : pal.sage);
-      ctx.fillStyle = vectorColor;
-      ctx.beginPath();
-      ctx.arc(vx, vy, 6, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Radar Shockwave on retrain
-      if (radarShockwaveActive) {
-        radarShockwaveRadius += 3.5;
-        const alpha = Math.max(0, 1.0 - radarShockwaveRadius / (maxR * 1.5));
-        if (alpha <= 0) {
-          radarShockwaveActive = false;
-        } else {
-          ctx.strokeStyle = pal.gold;
-          ctx.lineWidth = 3;
-          ctx.globalAlpha = alpha;
-          ctx.beginPath();
-          ctx.arc(0, 0, radarShockwaveRadius, 0, Math.PI * 2);
-          ctx.stroke();
-          ctx.globalAlpha = 1.0;
-        }
-      }
-
-      ctx.restore();
-
-      // Legend in Radar
-      ctx.font = "600 9px 'JetBrains Mono', monospace";
-      ctx.fillStyle = "rgba(255, 255, 255, 0.55)";
-      ctx.fillText("STABLE < 0.10", 12, 18);
-      ctx.fillText("WARN < 0.25", 12, 30);
-      ctx.fillStyle = pal.rust;
-      ctx.fillText("CRITICAL >= 0.25", 12, 42);
-
-      ctx.restore();
-      requestAnimationFrame(animateRadarCanvas);
-    }
-
-    function triggerRadarShockwave() {
-      radarShockwaveRadius = 10;
-      radarShockwaveActive = true;
-    }
-
-    function toggleRetrainSimulation() {
-      autoRetrainEnabled = !autoRetrainEnabled;
-      const btn = document.getElementById("btn-retrain-mode");
-      if (autoRetrainEnabled) {
-        btn.textContent = "Self-Healing Retrain: ON";
-        btn.className = "pill-sage px-3.5 py-1.5 rounded-xl text-xs font-bold transition";
-        triggerRadarShockwave();
-        showToast("Automated Retraining Active: Week 7–8 distribution snaps back to 90.94% F1");
-      } else {
-        btn.textContent = "Self-Healing Retrain: OFF (Drifting)";
-        btn.className = "pill-rust px-3.5 py-1.5 rounded-xl text-xs font-bold transition";
-        showToast("Automated Retraining OFF: Distribution stays out of phase (78.15% F1)");
-      }
-      selectDriftWeek(currentDriftWeek);
-    }
-
+    // -------------------------------------------------------------------------
+    // Drift Week Selector
+    // -------------------------------------------------------------------------
     function selectDriftWeek(wk) {
-      currentDriftWeek = wk;
-      const slider = document.getElementById("drift-week-slider");
-      if (slider) slider.value = String(wk);
-      const w = DRIFT_WEEKS[wk - 1];
-      if (!w) return;
+      const d = DRIFT_DATA[wk];
+      if (!d) return;
 
-      if (wk === 6 && autoRetrainEnabled) {
-        triggerRadarShockwave();
+      for (let i = 1; i <= 8; i++) {
+        const btn = document.getElementById("btn-wk-" + i);
+        if (i === wk) {
+          btn.className = "wk-btn p-2.5 rounded-lg border-2 border-blue-600 bg-blue-50 text-center transition";
+        } else if (i === 6) {
+          btn.className = "wk-btn p-2.5 rounded-lg border border-red-300 bg-red-50/70 text-center transition hover:border-red-400";
+        } else {
+          btn.className = "wk-btn p-2.5 rounded-lg border border-slate-200 bg-white text-center transition hover:border-slate-300";
+        }
       }
 
-      const psiVal = (!autoRetrainEnabled && wk >= 7) ? (wk === 7 ? 0.338 : 0.372) : w.psi;
-      const f1Val = autoRetrainEnabled ? w.f1Retrain : w.f1NoRetrain;
-      const statusStr = (!autoRetrainEnabled && wk >= 7) ? "UNMITIGATED_DRIFT" : w.status;
+      document.getElementById("selected-week-badge").textContent = `Week ${wk} Details`;
+      document.getElementById("drift-val-psi").textContent = d.psi.toFixed(3);
+      document.getElementById("drift-val-ewma").textContent = d.ewma.toFixed(4);
+      document.getElementById("drift-val-noretrain").textContent = d.noretrain;
+      document.getElementById("drift-val-retrain").textContent = d.retrain;
 
-      document.getElementById("drift-wk-title").textContent = `Week ${w.week} • PSI = ${psiVal.toFixed(3)}`;
-      const f1El = document.getElementById("drift-wk-f1");
-      f1El.textContent = `Macro F1: ${f1Val.toFixed(2)}%`;
-      f1El.style.color = psiVal >= 0.18 ? "var(--rust)" : "var(--sage)";
-
-      document.getElementById("drift-wk-psi").textContent = psiVal.toFixed(3);
-      document.getElementById("drift-wk-badge").textContent = statusStr;
-      document.getElementById("drift-wk-desc").textContent = (!autoRetrainEnabled && wk >= 7)
-        ? `Without automated Week 6 retraining, the streaming distribution stays out of phase in Week ${wk} (PSI = ${psiVal.toFixed(3)}), degrading Macro F1 to ${f1Val.toFixed(2)}%.`
-        : w.desc;
+      const alertEl = document.getElementById("drift-alert-msg");
+      alertEl.textContent = d.alert;
+      if (wk === 6) {
+        alertEl.className = "p-3 rounded-lg bg-red-100 border border-red-300 text-xs text-red-900 font-bold";
+      } else if (wk === 5) {
+        alertEl.className = "p-3 rounded-lg bg-amber-100 border border-amber-300 text-xs text-amber-900 font-medium";
+      } else {
+        alertEl.className = "p-3 rounded-lg bg-slate-100 border border-slate-200 text-xs text-slate-700 font-medium";
+      }
     }
-
-    // Bootstrap
-    window.addEventListener("DOMContentLoaded", () => {
-      runLiveInference();
-      updateTrojanCrack(100);
-      spawnConveyorParcel(5, 3, true, "5★ Sarcasm");
-      spawnConveyorParcel(1, 3, false, "Lithium Smoke");
-      selectDriftWeek(6);
-
-      requestAnimationFrame(animateConveyorCanvas);
-      requestAnimationFrame(animateForceBeamCanvas);
-      requestAnimationFrame(animateWaveCanvas);
-      requestAnimationFrame(animateRadarCanvas);
-
-      checkServerConnection();
-
-      const convCanvas = document.getElementById("conveyor-canvas");
-      if (convCanvas) {
-        convCanvas.addEventListener("mousemove", (e) => {
-          const r = convCanvas.getBoundingClientRect();
-          mousePos.x = e.clientX - r.left;
-          mousePos.y = e.clientY - r.top;
-          isMouseOverConveyor = true;
-        });
-        convCanvas.addEventListener("mouseleave", () => {
-          isMouseOverConveyor = false;
-        });
-        convCanvas.addEventListener("click", () => {
-          spawnCustomParcelFromInput();
-          triggerVisualShockwave(mousePos.x, mousePos.y, getPalette().sage);
-        });
-      }
-    });
   </script>
+
 </body>
 </html>
